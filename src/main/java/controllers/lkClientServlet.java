@@ -1,8 +1,6 @@
-package controller;
+package controllers;
 
-import common.ClientDAOException;
 import org.apache.log4j.Logger;
-import services.ClientService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

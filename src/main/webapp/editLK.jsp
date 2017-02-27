@@ -49,6 +49,7 @@
                 <td><input type="text" name="phone" id="phone" value="${Client.phone}"></td>
             </tr>
             <tr>
+                <td><input type="button" value="Назад" onclick="history.back()"></td>
                 <td><input type="submit" value="Изменить" formmethod="post"></td>
             </tr>
         </table>

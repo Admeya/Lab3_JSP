@@ -1,4 +1,4 @@
-package controller;
+package controllers;
 
 import Entities.ClientEntity;
 import common.Utils;
@@ -37,6 +37,7 @@ public class EditLKServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
         int clientId = Integer.parseInt(req.getParameter("idClient"));
         String login = req.getParameter("login");
         String pass = req.getParameter("password");

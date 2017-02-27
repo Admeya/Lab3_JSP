@@ -1,4 +1,4 @@
-package controller;
+package controllers;
 
 import Entities.ClientEntity;
 import common.ClientDAOException;

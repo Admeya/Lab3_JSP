@@ -39,9 +39,9 @@ public class ClientDao extends AbstractDao<ClientEntity> {
 
     @Override
     public String getUpdateQuery() {
-        return "UPDATE " + ClientEntity.tableName + " SET (" + ClientEntity.columnName + " = ? ," + ClientEntity.columnSurname + " = ?," +
+        return "UPDATE " + ClientEntity.tableName + " SET " + ClientEntity.columnName + " = ? ," + ClientEntity.columnSurname + " = ?," +
                 ClientEntity.columnMiddlename + " = ?," + ClientEntity.columnBirthdate + " = ?," + ClientEntity.columnPasport + " = ?," +
-                ClientEntity.columnPhone + " = ?, " + ClientEntity.columnLogin + " = ?, " + ClientEntity.columnPass + " = ?) WHERE " +
+                ClientEntity.columnPhone + " = ?, " + ClientEntity.columnLogin + " = ?, " + ClientEntity.columnPass + " = ? WHERE " +
                 ClientEntity.columnIdClient + " = ?";
     }
 
@@ -103,7 +103,7 @@ public class ClientDao extends AbstractDao<ClientEntity> {
             statement.setString(6, object.getPhone());
             statement.setString(7, object.getLogin());
             statement.setString(8, object.getPass());
-            statement.setInt(8, object.getIdClient());
+            statement.setInt(9, object.getIdClient());
             logger.trace(statement);
         } catch (Exception e) {
             logger.error("Возникла ошибка при подготовке данных для вставки в таблицу " + ClientEntity.tableName, e);

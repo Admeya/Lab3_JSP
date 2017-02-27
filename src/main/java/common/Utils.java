@@ -15,7 +15,7 @@ public class Utils {
     }
 
     public static java.util.Date stringToUtilDate(String dateBeforeFormat) throws ParseException {
-        java.util.Date formatDate = new SimpleDateFormat("yyyy-MM-dd").parse(dateBeforeFormat);
+        java.util.Date formatDate = new SimpleDateFormat("yyyy-MM-dd").parse(String.valueOf(dateBeforeFormat));
         return formatDate;
     }
 

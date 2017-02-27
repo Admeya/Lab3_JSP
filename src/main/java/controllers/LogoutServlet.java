@@ -1,4 +1,4 @@
-package controller;
+package controllers;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,7 +14,7 @@ public class LogoutServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getSession().invalidate();
-        RequestDispatcher reqDisp = getServletContext().getRequestDispatcher("/logout.jsp");
+        RequestDispatcher reqDisp = getServletContext().getRequestDispatcher("/login.jsp");
         reqDisp.forward(req, resp);
     }
 }

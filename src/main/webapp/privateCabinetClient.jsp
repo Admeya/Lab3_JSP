@@ -13,7 +13,7 @@
 </head>
 <body>
 <h2 align="center">Личный кабинет</h2>
-Добро пожаловать, ${Client.name}, <a href="/tour/login">Выход</a>
+Добро пожаловать, ${Client.name}, <a href="/tour/logout">Выход</a>
 <br>
 <br>
 <a href="/tour/editLK?idClient=${Client.idClient}">Редактировать персональную информацию</a>

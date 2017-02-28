@@ -17,4 +17,5 @@ dependencies {
     compile group: 'org.postgresql', name: 'postgresql', version: '9.2-1002-jdbc4'
     compile 'org.apache.commons:commons-lang3:3.5'
     compile 'log4j:log4j:1.2.17'
+    compile group: 'javax.mail', name: 'mail', version: '1.4'
 }

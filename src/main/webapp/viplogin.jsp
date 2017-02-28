@@ -4,10 +4,9 @@
     <title>Login</title>
 </head>
 <body>
-<h2 align="center">Вход для клиентов</h2>
+<h2 align="center">Вы зашли на страничку для входа сотрудников!</h2>
 <div align="right">
-    <a href="/tour/registration">Регистрация</a>
-    <form action="/tour/login" method="post">
+    <form action="/tour/viplogin" method="post">
         <table>
             <tr>
                 <td><label for="login">Login:</label></td>

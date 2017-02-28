@@ -4,8 +4,13 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
     <welcome-file-list>
-        <welcome-file>login.jsp</welcome-file>
+        <welcome-file>/login.jsp</welcome-file>
     </welcome-file-list>
+
+    <resource-ref>
+        <res-ref-name>jdbc/myPostgres</res-ref-name>
+        <res-type>javax.sql.ConnectionPoolDataSource</res-type>
+    </resource-ref>
 
     <servlet>
         <servlet-name>Login</servlet-name>
@@ -14,6 +19,15 @@
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>VIPLogin</servlet-name>
+        <servlet-class>controllers.VIPLoginServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>VIPLogin</servlet-name>
+        <url-pattern>/viplogin</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -45,6 +59,26 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>lkAdmin</servlet-name>
+        <servlet-class>controllers.lkAdminServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>lkAdmin</servlet-name>
+        <url-pattern>/lkAdmin</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AddEmployer</servlet-name>
+        <servlet-class>controllers.AddEmployeeServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddEmployer</servlet-name>
+        <url-pattern>/addEmpLK</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>editLK</servlet-name>
         <servlet-class>controllers.EditLKServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
@@ -52,6 +86,16 @@
     <servlet-mapping>
         <servlet-name>editLK</servlet-name>
         <url-pattern>/editLK</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>editEmployees</servlet-name>
+        <servlet-class>controllers.EditEmployeeServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>editEmployees</servlet-name>
+        <url-pattern>/editEmpLK</url-pattern>
     </servlet-mapping>
 
     <filter>
@@ -62,5 +106,9 @@
         <filter-name>Auth</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+
+    <listener>
+        <listener-class>listeners.SessionListener</listener-class>
+    </listener>
 
 </web-app>

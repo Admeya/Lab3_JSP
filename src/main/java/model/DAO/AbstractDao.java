@@ -53,7 +53,7 @@ public abstract class AbstractDao<T extends Serializable> implements GenericDAO<
         ResultSet rs = null;
         String sql = getSelectAllQuery();
 
-        try (Statement statement = connection.createStatement()) {
+        try (Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
             rs = statement.executeQuery(sql);
             list = parseResultSet(rs);
         } catch (Exception e) {

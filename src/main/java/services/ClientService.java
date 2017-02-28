@@ -2,8 +2,11 @@ package services;
 
 import Entities.ClientEntity;
 import common.ClientDAOException;
+import common.ConnectionPool;
 import common.ConnectionSingleton;
+import controllers.AddEmployeeServlet;
 import model.DAO.ClientDao;
+import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import java.sql.Connection;
@@ -14,12 +17,12 @@ import java.util.List;
  */
 public class ClientService {
     static Connection conn = ConnectionSingleton.getInstance().getConnection();
+    private static Logger logger = Logger.getLogger(AddEmployeeServlet.class);
 
-    static {
-        PropertyConfigurator.configure("./src/main/resources/log4j.xml");
-    }
+    // static Connection conn = ConnectionPool.getConnection();
 
     public static ClientEntity isAuthorize(String login, String pass) throws ClientDAOException {
+        logger.trace(conn + "Connection");
         ClientDao client = new ClientDao(conn);
         List<ClientEntity> list = client.selectByLoginAndPassword(login, pass);
         ClientEntity clEntity = null;

@@ -22,7 +22,7 @@ public interface GenericDAO<T extends Serializable> {
 
     public boolean update(T object);
 
-    public void delete(T object);
+    public boolean deleteById(String columnName, int key);
 
     public void deleteAll();
 

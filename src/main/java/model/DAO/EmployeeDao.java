@@ -44,10 +44,6 @@ public class EmployeeDao extends AbstractDao<EmployeeEntity> {
                 EmployeeEntity.columnId + " = ?";
     }
 
-    @Override
-    public String getDeleteQuery() {
-        return null;
-    }
 
     @Override
     protected void prepareStatementForInsert(PreparedStatement statement, EmployeeEntity object) {
@@ -109,8 +105,4 @@ public class EmployeeDao extends AbstractDao<EmployeeEntity> {
         }
     }
 
-    @Override
-    public void delete(EmployeeEntity object) {
-
-    }
 }

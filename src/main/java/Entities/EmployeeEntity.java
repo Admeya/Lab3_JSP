@@ -22,6 +22,7 @@ public class EmployeeEntity implements Serializable {
     public static String columnRole = "role";
     public static String roleUser = "user";
     public static String roleAdmin = "admin";
+
     private Integer idEmployee;
     private String name;
     private String surname;

@@ -29,8 +29,6 @@ public abstract class AbstractDao<T extends Serializable> implements GenericDAO<
 
     public abstract String getUpdateQuery();
 
-    public abstract String getDeleteQuery();
-
     public String getDeleteAllQuery() {
         return "DELETE FROM public." + getTableName();
     }
@@ -71,6 +69,20 @@ public abstract class AbstractDao<T extends Serializable> implements GenericDAO<
         } catch (Exception e) {
             logger.error("Возникла ошибка при удалении данных из БД: " + sql, e);
         }
+    }
+
+    @Override
+    public boolean deleteById(String columnName, int key) {
+        String sql = getDeleteAllQuery() + " WHERE " + columnName + " = " + key;
+        try (Statement statement = connection.createStatement()) {
+            if (statement.executeUpdate(sql) == 1) {
+                logger.trace(sql + " удалено");
+                return true;
+            }
+        } catch (Exception e) {
+            logger.error("Возникла ошибка при удалении записи по первичному ключу из БД: " + sql, e);
+        }
+        return false;
     }
 
     @Override

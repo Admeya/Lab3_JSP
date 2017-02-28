@@ -72,14 +72,4 @@ public class DestinationDao extends AbstractDao<DestinationEntity> {
     protected void prepareStatementForUpdate(PreparedStatement statement, DestinationEntity object) {
 
     }
-
-    @Override
-    public String getDeleteQuery() {
-        return null;
-    }
-
-    @Override
-    public void delete(DestinationEntity object) {
-
-    }
 }

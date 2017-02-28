@@ -37,19 +37,14 @@ public class EmployeeService {
         return clEntity;
     }
 
-    public static boolean registration(EmployeeEntity client) {
-        EmployeeDao employeeDao = new EmployeeDao(conn);
-        return employeeDao.insert(client);
-    }
-
     public static EmployeeEntity getClientByID(int idJournal) {
-        EmployeeDao clientDao = new EmployeeDao(conn);
-        return clientDao.selectByPK(idJournal, EmployeeEntity.columnId, new EmployeeEntity());
+        EmployeeDao employeeDao = new EmployeeDao(conn);
+        return employeeDao.selectByPK(idJournal, EmployeeEntity.columnId, new EmployeeEntity());
     }
 
-    public static boolean updateClient(EmployeeEntity cli) {
-        EmployeeDao clientDao = new EmployeeDao(conn);
-        return clientDao.update(cli);
+    public static boolean updateEmpl(EmployeeEntity cli) {
+        EmployeeDao employeeDao = new EmployeeDao(conn);
+        return employeeDao.update(cli);
     }
 
     public static List<EmployeeEntity> selectAll() {
@@ -60,5 +55,11 @@ public class EmployeeService {
     public static boolean addEmployee(EmployeeEntity employee) {
         EmployeeDao employeeDao = new EmployeeDao(conn);
         return employeeDao.insert(employee);
+    }
+
+
+    public static boolean deleteEmployee(int empId) {
+        EmployeeDao employeeDao = new EmployeeDao(conn);
+        return employeeDao.deleteById(EmployeeEntity.columnId, empId);
     }
 }

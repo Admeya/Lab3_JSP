@@ -20,9 +20,23 @@ public class lkAdminServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<EmployeeEntity> employees = EmployeeService.selectAll();
-        req.setAttribute("Employees", employees);
-        req.getRequestDispatcher("privateCabinetAdmin.jsp").forward(req, resp);
+        String paramId = req.getParameter("idEmpl");
+
+        if (paramId != null) {
+            int empId = Integer.parseInt(paramId);
+            if (EmployeeService.deleteEmployee(empId)) {
+                logger.trace("true");
+                resp.sendRedirect("/tour/lkAdmin");
+            } else {
+                logger.trace("false");
+                req.getRequestDispatcher("error.jsp").forward(req, resp);
+            }
+        } else {
+
+            List<EmployeeEntity> employees = EmployeeService.selectAll();
+            req.setAttribute("Employees", employees);
+            req.getRequestDispatcher("privateCabinetAdmin.jsp").forward(req, resp);
+        }
     }
 
     @Override

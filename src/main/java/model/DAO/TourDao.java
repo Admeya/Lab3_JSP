@@ -80,14 +80,4 @@ public class TourDao extends AbstractDao<TourEntity> {
     protected void prepareStatementForUpdate(PreparedStatement statement, TourEntity object) {
 
     }
-
-    @Override
-    public String getDeleteQuery() {
-        return null;
-    }
-
-    @Override
-    public void delete(TourEntity object) {
-
-    }
 }

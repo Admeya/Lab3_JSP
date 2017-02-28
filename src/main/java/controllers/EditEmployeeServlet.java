@@ -1,17 +1,14 @@
 package controllers;
 
-import Entities.ClientEntity;
-import common.Utils;
+import Entities.EmployeeEntity;
 import org.apache.log4j.Logger;
-import services.ClientService;
+import services.EmployeeService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.text.ParseException;
-import java.util.Date;
 
 /**
  * Created by Ирина on 22.02.2017.
@@ -22,13 +19,13 @@ public class EditEmployeeServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String idClient = req.getParameter("idClient");
-        if (idClient != null) {
-            int idCl = Integer.parseInt(idClient);
+        String idEmpl = req.getParameter("idEmpl");
+        if (idEmpl != null) {
+            int idCl = Integer.parseInt(idEmpl);
 
-            ClientEntity client = ClientService.getClientByID(idCl);
-            req.setAttribute("Client", client);
-            req.getRequestDispatcher("/editLK.jsp").forward(req, resp);
+            EmployeeEntity employee = EmployeeService.getClientByID(idCl);
+            req.setAttribute("Employee", employee);
+            req.getRequestDispatcher("/editEmployee.jsp").forward(req, resp);
         } else {
             logger.trace("false");
             req.getRequestDispatcher("error.jsp").forward(req, resp);
@@ -38,27 +35,22 @@ public class EditEmployeeServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
-        int clientId = Integer.parseInt(req.getParameter("idClient"));
+        int clientId = Integer.parseInt(req.getParameter("idEmployee"));
         String login = req.getParameter("login");
         String pass = req.getParameter("password");
-        String clientName = req.getParameter("clientName");
-        String clientSurname = req.getParameter("clientSurname");
-        String clientMiddleName = req.getParameter("clientMiddleName");
-        String passport = req.getParameter("passport");
+        String emplName = req.getParameter("emplName");
+        String emplSurname = req.getParameter("emplSurname");
+        String email = req.getParameter("email");
+        String role = req.getParameter("role");
         String phone = req.getParameter("phone");
-        Date birthdate = null;
-        try {
-            birthdate = Utils.stringToUtilDate(req.getParameter("birthdate"));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
 
-        ClientEntity cli = new ClientEntity(clientName, clientSurname, clientMiddleName, birthdate, passport, phone, login, pass);
-        cli.setIdClient(clientId);
 
-        if (ClientService.updateClient(cli)) {
+        EmployeeEntity empl = new EmployeeEntity(emplName, emplSurname, phone, login, pass, email, role);
+        empl.setIdEmployee(clientId);
+
+        if (EmployeeService.updateEmpl(empl)) {
             logger.trace("true");
-            resp.sendRedirect("/tour/editLK?idClient=" + clientId);
+            resp.sendRedirect("/tour/lkAdmin");
         } else {
             logger.trace("false");
             req.getRequestDispatcher("error.jsp").forward(req, resp);

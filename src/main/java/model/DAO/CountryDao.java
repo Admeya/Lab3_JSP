@@ -67,14 +67,4 @@ public class CountryDao extends AbstractDao<CountryEntity> {
     protected void prepareStatementForUpdate(PreparedStatement statement, CountryEntity object) {
 
     }
-
-    @Override
-    public void delete(CountryEntity object) {
-
-    }
-
-    @Override
-    public String getDeleteQuery() {
-        return null;
-    }
 }

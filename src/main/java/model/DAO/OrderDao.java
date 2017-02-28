@@ -78,14 +78,4 @@ public class OrderDao extends AbstractDao<OrderEntity> {
     protected void prepareStatementForUpdate(PreparedStatement statement, OrderEntity object) {
 
     }
-
-    @Override
-    public String getDeleteQuery() {
-        return null;
-    }
-
-    @Override
-    public void delete(OrderEntity object) {
-
-    }
 }

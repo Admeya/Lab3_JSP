@@ -109,15 +109,4 @@ public class ClientDao extends AbstractDao<ClientEntity> {
             logger.error("Возникла ошибка при подготовке данных для вставки в таблицу " + ClientEntity.tableName, e);
         }
     }
-
-    @Override
-    public void delete(ClientEntity object) {
-
-    }
-
-    @Override
-    public String getDeleteQuery() {
-        return null;
-    }
-
 }

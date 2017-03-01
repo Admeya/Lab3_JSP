@@ -44,16 +44,19 @@ public class EditEmployeeServlet extends HttpServlet {
         String role = req.getParameter("role");
         String phone = req.getParameter("phone");
 
+        if ((login != "") && (pass != "") && (email != "") && (phone != "") && (role != "") &&
+                (emplSurname != "") && (emplName != "")) {
 
-        EmployeeEntity empl = new EmployeeEntity(emplName, emplSurname, phone, login, pass, email, role);
-        empl.setIdEmployee(clientId);
+            EmployeeEntity empl = new EmployeeEntity(emplName, emplSurname, phone, login, pass, email, role);
+            empl.setIdEmployee(clientId);
 
-        if (EmployeeService.updateEmpl(empl)) {
-            logger.trace("true");
-            resp.sendRedirect("/tour/lkAdmin");
-        } else {
-            logger.trace("false");
-            req.getRequestDispatcher("error.jsp").forward(req, resp);
+            if (EmployeeService.updateEmpl(empl)) {
+                logger.trace("true");
+                resp.sendRedirect("/tour/lkAdmin");
+            } else {
+                logger.trace("false");
+                req.getRequestDispatcher("error.jsp").forward(req, resp);
+            }
         }
     }
 }

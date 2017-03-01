@@ -16,6 +16,7 @@
 Добро пожаловать, ${Client.name}, <a href="/tour/logout">Выход</a>
 <br>
 <br>
-<a href="/tour/editLK?idClient=${Client.idClient}">Редактировать персональную информацию</a>
+<a href="/tour/editLK?idClient=${Client.idClient}">Редактировать персональную информацию</a><br>
+<a href="/tour/viewLK?idClient=${Client.idClient}">Просмотреть персональную информацию</a>
 </body>
 </html>

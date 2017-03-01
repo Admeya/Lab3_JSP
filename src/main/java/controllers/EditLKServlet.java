@@ -58,7 +58,7 @@ public class EditLKServlet extends HttpServlet {
 
         if (ClientService.updateClient(cli)) {
             logger.trace("true");
-            resp.sendRedirect("/tour/editLK?idClient=" + clientId);
+            resp.sendRedirect("/tour/viewLK?idClient=" + clientId);
         } else {
             logger.trace("false");
             req.getRequestDispatcher("error.jsp").forward(req, resp);

@@ -33,15 +33,19 @@ public class AddEmployeeServlet extends HttpServlet {
         String emplSurname = req.getParameter("emplSurname");
         String emplName = req.getParameter("emplName");
 
+        if ((login != "") && (password != "") && (email != "") && (phone != "") &&
+                (emplSurname != "") && (emplName != "")) {
+            EmployeeEntity empl = new EmployeeEntity(emplName, emplSurname, phone, login, password, email, role);
 
-        EmployeeEntity empl = new EmployeeEntity(emplName, emplSurname, phone, login, password, email, role);
-
-        if (EmployeeService.addEmployee(empl)) {
-            logger.trace("true");
-            resp.sendRedirect("/tour/lkAdmin");
+            if (EmployeeService.addEmployee(empl)) {
+                logger.trace("true");
+                resp.sendRedirect("/tour/lkAdmin");
+            } else {
+                logger.trace("false");
+                req.getRequestDispatcher("viperror.jsp").forward(req, resp);
+            }
         } else {
-            logger.trace("false");
-            req.getRequestDispatcher("viperror.jsp").forward(req, resp);
+            req.getRequestDispatcher("nullvalerror.jsp").forward(req, resp);
         }
     }
 }

@@ -18,11 +18,12 @@ import java.util.List;
  * Created by Ирина on 24.02.2017.
  */
 public class EmployeeService {
-    static Connection conn = ConnectionSingleton.getInstance().getConnection();
+    static ConnectionPool conpul = new ConnectionPool();
+    static Connection conn = conpul.getConnection();
     private static Logger logger = Logger.getLogger(AddEmployeeServlet.class);
 
     static {
-        PropertyConfigurator.configure("./src/main/resources/log4j.xml");
+        PropertyConfigurator.configure("/src/main/resources/log4j.xml");
     }
 
     public static EmployeeEntity isAuthorize(String login, String pass) throws EmployeeDAOException {

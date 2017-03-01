@@ -12,6 +12,7 @@
 </head>
 <body>
 <h2 align="center">Добавление нового сотрудника</h2>
+<a href="/tour/logout">Выход</a>
 <div align="center">
     <form action="/tour/addEmpLK" method="post">
         <table>

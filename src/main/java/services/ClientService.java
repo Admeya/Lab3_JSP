@@ -16,10 +16,9 @@ import java.util.List;
  * Created by Ирина on 24.02.2017.
  */
 public class ClientService {
-    static Connection conn = ConnectionSingleton.getInstance().getConnection();
+    static ConnectionPool conpul = new ConnectionPool();
+    static Connection conn = conpul.getConnection();
     private static Logger logger = Logger.getLogger(AddEmployeeServlet.class);
-
-    // static Connection conn = ConnectionPool.getConnection();
 
     public static ClientEntity isAuthorize(String login, String pass) throws ClientDAOException {
         logger.trace(conn + "Connection");

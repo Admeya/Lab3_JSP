@@ -11,7 +11,8 @@
     <title>Title</title>
 </head>
 <body>
-<h2 align="center">Добавление нового сотрудника</h2>
+<h2 align="center">Редактирование данных сотрудника</h2>
+<a href="/tour/logout">Выход</a>
 <div align="center">
     <form action="/tour/editEmpLK" method="post">
         <input type="hidden" name="idEmployee" id="idEmployee" value="${Employee.idEmployee}">

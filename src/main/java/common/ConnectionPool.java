@@ -19,31 +19,26 @@ import java.util.Properties;
 public class ConnectionPool {
     static Logger logger = Logger.getLogger(ConnectionPool.class);
 
-    private static Connection connection;
+    private Connection connection;
 
-    private ConnectionPool() {
+    public ConnectionPool() {
         try {
-//            Properties env = new Properties();
-//            env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.rmi.registry.RegistryContextFactory");
-//            InitialContext context = new InitialContext(env);
-//            ConnectionPoolDataSource dataSource = (ConnectionPoolDataSource) context.lookup("jdbc/myPostgres");
-//           PooledConnection conn = dataSource.getPooledConnection();
-
+            Class.forName("org.postgresql.Driver");
             Context initialContext = new InitialContext();
-            Context environmentContext = (Context) initialContext.lookup("jdbc:postgresql");
-            String dataResourceName = "jdbc/myPostgres";
-            DataSource dataSource = (DataSource) environmentContext.lookup(dataResourceName);
+            DataSource ds = (DataSource) initialContext.lookup("java:comp/env/jdbc/Tourfirm");
+            logger.trace("Connection is " + ds.getConnection());
 
-
-            this.connection = dataSource.getConnection();
+            this.connection = ds.getConnection();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("SQL exception, однако", e);
         } catch (NamingException e) {
-            e.printStackTrace();
+            logger.error("Ошибочка с именованием", e);
+        } catch (ClassNotFoundException e) {
+            logger.error("Драйвер для postgres не найден", e);
         }
     }
 
-    public static Connection getConnection() {
+    public Connection getConnection() {
         return connection;
     }
 }

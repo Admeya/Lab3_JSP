@@ -1,4 +1,4 @@
-<%--
+<%@ page import="Entities.EmployeeEntity" %><%--
   Created by IntelliJ IDEA.
   User: Ирина
   Date: 22.02.2017

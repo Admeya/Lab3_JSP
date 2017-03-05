@@ -15,16 +15,16 @@
 
     <servlet>
         <servlet-name>Login</servlet-name>
-        <servlet-class>controllers.LoginServlet</servlet-class>
+        <servlet-class>ru.lab3.controllers.login.LoginServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
-        <url-pattern>/</url-pattern>
+        <url-pattern>/login</url-pattern>
     </servlet-mapping>
 
     <servlet>
         <servlet-name>VIPLogin</servlet-name>
-        <servlet-class>controllers.VIPLoginServlet</servlet-class>
+        <servlet-class>ru.lab3.controllers.login.VIPLoginServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>VIPLogin</servlet-name>
@@ -32,8 +32,17 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>Main</servlet-name>
+        <servlet-class>ru.lab3.controllers.MainServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Main</servlet-name>
+        <url-pattern>/index</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>Registration</servlet-name>
-        <servlet-class>controllers.RegistrationServlet</servlet-class>
+        <servlet-class>ru.lab3.controllers.login.RegistrationServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Registration</servlet-name>
@@ -42,7 +51,7 @@
 
     <servlet>
         <servlet-name>Logout</servlet-name>
-        <servlet-class>controllers.LogoutServlet</servlet-class>
+        <servlet-class>ru.lab3.controllers.login.LogoutServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Logout</servlet-name>
@@ -51,7 +60,7 @@
 
     <servlet>
         <servlet-name>lkClient</servlet-name>
-        <servlet-class>controllers.lkClientServlet</servlet-class>
+        <servlet-class>ru.lab3.controllers.for_client.LKClientServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
@@ -60,8 +69,28 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>lkEmpl</servlet-name>
+        <servlet-class>ru.lab3.controllers.for_employee.LKEmployeeServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>lkEmpl</servlet-name>
+        <url-pattern>/lkEmpl</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>setOrder</servlet-name>
+        <servlet-class>ru.lab3.controllers.for_client.SetOrderServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>setOrder</servlet-name>
+        <url-pattern>/setOrder</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>lkAdmin</servlet-name>
-        <servlet-class>controllers.lkAdminServlet</servlet-class>
+        <servlet-class>ru.lab3.controllers.for_admin.LKAdminServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
@@ -71,7 +100,7 @@
 
     <servlet>
         <servlet-name>AddEmployer</servlet-name>
-        <servlet-class>controllers.AddEmployeeServlet</servlet-class>
+        <servlet-class>ru.lab3.controllers.for_admin.AddEmployeeServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
@@ -81,7 +110,7 @@
 
     <servlet>
         <servlet-name>editLK</servlet-name>
-        <servlet-class>controllers.EditLKServlet</servlet-class>
+        <servlet-class>ru.lab3.controllers.for_client.EditLKServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
@@ -90,8 +119,18 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>editOrder</servlet-name>
+        <servlet-class>ru.lab3.controllers.for_employee.EditOrderServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>editOrder</servlet-name>
+        <url-pattern>/editOrder</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>viewLK</servlet-name>
-        <servlet-class>controllers.ViewLKServlet</servlet-class>
+        <servlet-class>ru.lab3.controllers.for_client.ViewLKServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
@@ -101,7 +140,7 @@
 
     <servlet>
         <servlet-name>editEmployees</servlet-name>
-        <servlet-class>controllers.EditEmployeeServlet</servlet-class>
+        <servlet-class>ru.lab3.controllers.for_admin.EditEmployeeServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
@@ -111,7 +150,7 @@
 
     <filter>
         <filter-name>Auth</filter-name>
-        <filter-class>filters.AuthFilter</filter-class>
+        <filter-class>ru.lab3.filters.AuthFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>Auth</filter-name>
@@ -119,7 +158,14 @@
     </filter-mapping>
 
     <listener>
-        <listener-class>listeners.SessionListener</listener-class>
+        <listener-class>ru.lab3.listeners.SessionListener</listener-class>
     </listener>
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>beans.xml</param-value>
+    </context-param>
 
 </web-app>

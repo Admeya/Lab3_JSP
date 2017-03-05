@@ -9,7 +9,6 @@
 <html>
 <head>
     <title>First app</title>
-    <link href="style.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <h2 align="center">Личный кабинет</h2>

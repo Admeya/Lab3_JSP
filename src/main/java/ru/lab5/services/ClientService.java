@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.lab5.DAO.ClientDao;
+import ru.lab5.DAO.GenericDAO;
 import ru.lab5.Entities.ClientEntity;
 import ru.lab5.exceptions.ClientDAOException;
 import ru.lab5.common.ConnectionPool;
@@ -19,8 +20,7 @@ import java.util.List;
 public class ClientService implements IClientService {
     static Connection conn = ConnectionPool.getInstance().getConnection();
     private static Logger logger = Logger.getLogger(AddEmployeeController.class);
-
-    private ClientDao clientDAO;
+    private GenericDAO<ClientEntity> clientDAO;
 
     @Autowired
     public ClientService(ClientDao clientDAO) {

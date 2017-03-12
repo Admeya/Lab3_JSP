@@ -13,7 +13,7 @@
 </head>
 <body>
 <h2 align="center">Операции с заказами</h2>
-<a href="/tour/editOrder">Выход</a><br>
+<a href="/tour/logout">Выход</a><br>
 <input type="button" value="Назад" onclick="history.back()">
 <div align="center">
     Новые заказы

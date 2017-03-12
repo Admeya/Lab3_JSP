@@ -1,6 +1,7 @@
 package ru.lab5.Entities;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Collection;
 
@@ -15,14 +16,13 @@ public class TourEntity implements Serializable{
     public static String columnDateEnd = "date_end";
     public static String columnCost = "cost";
     public static String columnIdDestination = "id_destination";
+
     private Integer idTour;
     private String name;
-    private LocalDate dateStart;
-    private LocalDate dateEnd;
+    private Date dateStart;
+    private Date dateEnd;
     private Integer cost;
     private Integer idDestination;
-    private DestinationEntity destinationPlaceByIdDestination;
-    private Collection<OrderEntity> orderssByIdTour;
     private Integer idCountry;
     private String nameCountry;
     private String resort;
@@ -44,19 +44,19 @@ public class TourEntity implements Serializable{
         this.name = name;
     }
 
-    public LocalDate getDateStart() {
+    public Date getDateStart() {
         return dateStart;
     }
 
-    public void setDateStart(LocalDate dateStart) {
+    public void setDateStart(Date dateStart) {
         this.dateStart = dateStart;
     }
 
-    public LocalDate getDateEnd() {
+    public Date getDateEnd() {
         return dateEnd;
     }
 
-    public void setDateEnd(LocalDate dateEnd) {
+    public void setDateEnd(Date dateEnd) {
         this.dateEnd = dateEnd;
     }
 
@@ -146,24 +146,6 @@ public class TourEntity implements Serializable{
                 ", dateEnd=" + dateEnd +
                 ", cost=" + cost +
                 ", idDestination=" + idDestination +
-                ", destinationPlaceByIdDestination=" + destinationPlaceByIdDestination +
-                ", orderssByIdTour=" + orderssByIdTour +
                 '}';
-    }
-
-    public DestinationEntity getDestinationPlaceByIdDestination() {
-        return destinationPlaceByIdDestination;
-    }
-
-    public void setDestinationPlaceByIdDestination(DestinationEntity destinationPlaceByIdDestination) {
-        this.destinationPlaceByIdDestination = destinationPlaceByIdDestination;
-    }
-
-    public Collection<OrderEntity> getOrderssByIdTour() {
-        return orderssByIdTour;
-    }
-
-    public void setOrderssByIdTour(Collection<OrderEntity> orderssByIdTour) {
-        this.orderssByIdTour = orderssByIdTour;
     }
 }

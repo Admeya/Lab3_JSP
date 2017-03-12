@@ -1,29 +1,35 @@
 package ru.lab5.Entities;
 
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
-import java.util.Collection;
 
 /**
  * Created by Ирина on 17.02.2017.
  */
-@XmlType(propOrder = { "idDestination", "idCountry", "resort", "hotel", "countryByIdCountry", "catalogueTourssByIdDestination"}, name = "DestinationEntity")
+@XmlType(propOrder = {"idDestination", "idCountry", "resort", "hotel", "countryByIdCountry", "catalogueTourssByIdDestination"}, name = "DestinationEntity")
 @XmlRootElement
-public class DestinationEntity implements Serializable{
+public class DestinationEntity implements Serializable {
     public static String tableName = "destination";
     public static String columnId = "id_destination";
     public static String columnIdCountry = "id_country";
     public static String columnResort = "resort";
     public static String columnHotel = "hotel";
+
     private Integer idDestination;
     private Integer idCountry;
     private String resort;
     private String hotel;
-    @XmlTransient
-    private Collection<TourEntity> catalogueTourssByIdDestination;
-    private CountryEntity countryByIdCountry;
+
+    private String nameCountry;
+
+    public String getNameCountry() {
+        return nameCountry;
+    }
+
+    public void setNameCountry(String nameCountry) {
+        this.nameCountry = nameCountry;
+    }
 
     public Integer getIdDestination() {
         return idDestination;
@@ -88,25 +94,6 @@ public class DestinationEntity implements Serializable{
                 "idDestination=" + idDestination +
                 ", idCountry=" + idCountry +
                 ", resort='" + resort + '\'' +
-                ", hotel='" + hotel + '\'' +
-                ", catalogueTourssByIdDestination=" + catalogueTourssByIdDestination +
-                ", countryByIdCountry=" + countryByIdCountry +
-                '}';
-    }
-
-    public Collection<TourEntity> getCatalogueTourssByIdDestination() {
-        return catalogueTourssByIdDestination;
-    }
-
-    public void setCatalogueTourssByIdDestination(Collection<TourEntity> catalogueTourssByIdDestination) {
-        this.catalogueTourssByIdDestination = catalogueTourssByIdDestination;
-    }
-
-    public CountryEntity getCountryByIdCountry() {
-        return countryByIdCountry;
-    }
-
-    public void setCountryByIdCountry(CountryEntity countryByIdCountry) {
-        this.countryByIdCountry = countryByIdCountry;
+                ", hotel='" + hotel + '}';
     }
 }

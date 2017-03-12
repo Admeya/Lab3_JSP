@@ -5,6 +5,8 @@ package ru.lab5.DAO;
  */
 
 import java.io.Serializable;
+import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,6 +15,9 @@ import java.util.List;
  * @param <T> тип передаваемого объекта
  */
 public interface GenericDAO<T extends Serializable> {
+    Connection getConnection();
+
+    void setConnection(Connection connection);
 
     List<T> selectAll();
 
@@ -26,5 +31,13 @@ public interface GenericDAO<T extends Serializable> {
 
     void deleteAll();
 
+    List<T> selectByLoginAndPassword(String login, String pass);
 
+    default int selectIdByParam(String columnName, String value) {
+        return 0;
+    }
+
+    default List<T> selectById(int key, String columnName) {
+        return new ArrayList<T>();
+    }
 }

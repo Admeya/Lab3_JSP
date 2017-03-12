@@ -24,33 +24,6 @@ public class AddEmployeeController {
         this.employeeService = employeeService;
     }
 
-//    @Override
-//    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        req.setCharacterEncoding("UTF-8");
-//        String login = req.getParameter("login");
-//        String password = req.getParameter("password");
-//        String email = req.getParameter("email");
-//        String phone = req.getParameter("phone");
-//        String role = req.getParameter("role");
-//        String emplSurname = req.getParameter("emplSurname");
-//        String emplName = req.getParameter("emplName");
-//
-//
-//        EmployeeEntity empl = new EmployeeEntity(emplName, emplSurname, phone, login, password, email, role);
-//
-//        if (employeeService.addEmployee(empl)) {
-//            logger.trace("true");
-//            resp.sendRedirect("/tour/lkAdmin");
-//        } else {
-//            logger.trace("false");
-//            req.getRequestDispatcher("viperror.jsp").forward(req, resp);
-//        }
-//    } else
-//
-//    {
-//        req.getRequestDispatcher("nullvalerror.jsp").forward(req, resp);
-//    }
-
     @RequestMapping(value = "/addEmpLK", method = RequestMethod.POST)
     public ModelAndView showRegistrationPage(@ModelAttribute("employee") EmployeeEntity employee) {
         ModelAndView modelAndView = null;
@@ -64,6 +37,6 @@ public class AddEmployeeController {
 
     @RequestMapping(value = "/addEmpLK", method = RequestMethod.GET)
     public ModelAndView getLKCLientPage() {
-        return new ModelAndView("addEmployee");
+        return new ModelAndView("addDestination");
     }
 }

@@ -1,7 +1,7 @@
 package ru.lab5.DAO;
 
-import ru.lab5.Entities.CountryEntity;
 import org.springframework.stereotype.Component;
+import ru.lab5.Entities.CountryEntity;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,7 +25,8 @@ public class CountryDao extends AbstractDao<CountryEntity> {
 
     @Override
     public String getUpdateQuery() {
-        return null;
+        return "UPDATE " + CountryEntity.tableName + " SET " + CountryEntity.columnName + " = ? WHERE " +
+                CountryEntity.columnId + " = ?";
     }
 
     @Override
@@ -55,6 +56,12 @@ public class CountryDao extends AbstractDao<CountryEntity> {
 
     @Override
     protected void prepareStatementForUpdate(PreparedStatement statement, CountryEntity object) {
-
+        try {
+            statement.setString(1, object.getNameCountry());
+            statement.setInt(2, object.getIdCountry());
+            logger.trace(statement);
+        } catch (Exception e) {
+            logger.error("Возникла ошибка при подготовке данных для вставки в таблицу " + CountryEntity.tableName, e);
+        }
     }
 }

@@ -16,11 +16,9 @@
 <br>
 <br>
 <a href="/tour/editOrder?idEmpl=${Employee.idEmployee}">Заказы</a><br>
-<a href="/tour/editOrder?idEmpl=${Employee.idEmployee}">Просмотр справочника стран</a><br>
-<a href="/tour/editOrder?idEmpl=${Employee.idEmployee}">Редактирование справочника стран</a><br>
-<a href="/tour/editOrder?idEmpl=${Employee.idEmployee}">Просмотр справочника локаций</a><br>
-<a href="/tour/editOrder?idEmpl=${Employee.idEmployee}">Редактирование справочника локаций</a><br>
-<a href="/tour/editOrder?idEmpl=${Employee.idEmployee}">Просмотр справочника туров</a><br>
-<a href="/tour/editOrder?idEmpl=${Employee.idEmployee}">Редактирование справочника туров</a><br>
+<a href="/tour/viewCountry">Просмотр справочника стран</a><br>
+<a href="/tour/viewDest">Просмотр справочника локаций</a><br>
+<a href="/tour/viewTour">Просмотр справочника туров</a><br>
+
 </body>
 </html>

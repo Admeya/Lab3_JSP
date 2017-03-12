@@ -1,6 +1,7 @@
 package ru.lab5.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import ru.lab5.DAO.GenericDAO;
 import ru.lab5.Entities.EmployeeEntity;
 import ru.lab5.common.ConnectionPool;
 import ru.lab5.exceptions.EmployeeDAOException;
@@ -25,7 +26,7 @@ public class EmployeeService implements IEmployeeService {
         PropertyConfigurator.configure("/src/main/resources/log4j.xml");
     }
 
-    private EmployeeDao employeeDao;
+    private GenericDAO<EmployeeEntity> employeeDao;
 
     @Autowired
     public EmployeeService(EmployeeDao employeeDao) {

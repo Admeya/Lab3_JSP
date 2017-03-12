@@ -136,6 +136,7 @@ public abstract class AbstractDao<T extends Serializable> implements GenericDAO<
         return list.iterator().next();
     }
 
+    @Override
     public List<T> selectByLoginAndPassword(String login, String pass) {
         List<T> list = new ArrayList<T>();
         String sql = getSelectAllQuery() + " where login = ? and password = ?";

@@ -12,4 +12,10 @@ public interface ITourService {
     List<TourEntity> getAllTours();
 
     boolean updateTour(TourEntity tour);
+
+    boolean addTour(TourEntity tour);
+
+    boolean deleteTour(int tourId);
+
+    TourEntity getTourById(int idDest);
 }

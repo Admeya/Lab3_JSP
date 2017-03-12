@@ -2,6 +2,7 @@ package ru.lab5.exceptions;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -11,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * Created by Ирина on 08.03.2017.
  */
-@Controller
+@ControllerAdvice
 public class ExceptionHandlingController {
     Logger logger = Logger.getLogger(ExceptionHandlingController.class);
 

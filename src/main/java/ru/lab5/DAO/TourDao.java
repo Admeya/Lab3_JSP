@@ -21,6 +21,11 @@ public class TourDao extends AbstractDao<TourEntity> {
             " c on d." + DestinationEntity.columnIdCountry + " = c." + CountryEntity.columnId;
 
     @Override
+    public String getSelectAllQuery() {
+        return GET_ALL_TOURS;
+    }
+
+    @Override
     public String getTableName() {
         return TourEntity.tableName;
     }
@@ -34,7 +39,9 @@ public class TourDao extends AbstractDao<TourEntity> {
 
     @Override
     public String getUpdateQuery() {
-        return null;
+        return "UPDATE " + TourEntity.tableName + " SET " + TourEntity.columnName + " = ? ," + TourEntity.columnDateStart + " = ?," +
+                TourEntity.columnDateEnd + " = ?," + TourEntity.columnCost + " = ?," + TourEntity.columnIdDestination + " = ? WHERE " +
+                TourEntity.columnId + " = ?";
     }
 
     @Override
@@ -45,8 +52,8 @@ public class TourDao extends AbstractDao<TourEntity> {
                 TourEntity tour = new TourEntity();
                 tour.setIdTour(rs.getInt(TourEntity.columnId));
                 tour.setName(rs.getString(TourEntity.columnName).trim());
-                tour.setDateStart(rs.getDate(TourEntity.columnDateStart).toLocalDate());
-                tour.setDateEnd(rs.getDate(TourEntity.columnDateEnd).toLocalDate());
+                tour.setDateStart(rs.getDate(TourEntity.columnDateStart));
+                tour.setDateEnd(rs.getDate(TourEntity.columnDateEnd));
                 tour.setCost(rs.getInt(TourEntity.columnCost));
                 tour.setIdDestination(rs.getInt(TourEntity.columnIdDestination));
                 tour.setIdCountry(rs.getInt(CountryEntity.columnId));
@@ -65,10 +72,10 @@ public class TourDao extends AbstractDao<TourEntity> {
     protected void prepareStatementForInsert(PreparedStatement statement, TourEntity object) {
         try {
             statement.setString(1, object.getName());
-            statement.setDate(2, java.sql.Date.valueOf(object.getDateStart()));
-            statement.setDate(3, java.sql.Date.valueOf(object.getDateEnd()));
+            statement.setDate(2, object.getDateStart());
+            statement.setDate(3, object.getDateEnd());
             statement.setInt(4, object.getCost());
-            statement.setInt(5, object.getDestinationPlaceByIdDestination().getIdDestination());
+            statement.setInt(5, object.getIdDestination());
         } catch (Exception e) {
             logger.error("Возникла ошибка при подготовке данных для вставки в таблицу " + TourEntity.tableName, e);
         }
@@ -76,20 +83,16 @@ public class TourDao extends AbstractDao<TourEntity> {
 
     @Override
     protected void prepareStatementForUpdate(PreparedStatement statement, TourEntity object) {
-
-    }
-
-    public List<TourEntity> selectAllTours() {
-        List<TourEntity> list = new ArrayList<TourEntity>();
-        ResultSet rs = null;
-        String sql = GET_ALL_TOURS;
-
-        try (Statement statement = getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
-            rs = statement.executeQuery(sql);
-            list = parseResultSet(rs);
+        try {
+            statement.setString(1, object.getName());
+            statement.setDate(2, object.getDateStart());
+            statement.setDate(3, object.getDateEnd());
+            statement.setInt(4, object.getCost());
+            statement.setInt(5, object.getIdDestination());
+            statement.setInt(6, object.getIdTour());
+            logger.trace(statement);
         } catch (Exception e) {
-            logger.error("Возникла ошибка при извлечении данных из БД: " + sql, e);
+            logger.error("Возникла ошибка при подготовке данных для вставки в таблицу " + TourEntity.tableName, e);
         }
-        return list;
     }
 }

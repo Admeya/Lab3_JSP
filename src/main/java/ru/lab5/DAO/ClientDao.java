@@ -1,11 +1,8 @@
 package ru.lab5.DAO;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.dao.SaltSource;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import ru.lab5.Entities.ClientEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+import ru.lab5.Entities.ClientEntity;
 import ru.lab5.common.SaltPassword;
 
 import java.sql.PreparedStatement;
@@ -14,7 +11,7 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-@Component
+@Repository
 public class ClientDao extends AbstractDao<ClientEntity> {
     @Override
     public String getTableName() {
@@ -46,16 +43,11 @@ public class ClientDao extends AbstractDao<ClientEntity> {
             } else {
                 rs.beforeFirst();
                 while (rs.next()) {
-                    ClientEntity client = new ClientEntity();
-                    client.setIdClient(rs.getInt(ClientEntity.columnIdClient));
-                    client.setName(rs.getString(ClientEntity.columnName).trim());
-                    client.setSurname(rs.getString(ClientEntity.columnSurname).trim());
-                    client.setMiddlename(rs.getString(ClientEntity.columnMiddlename).trim());
-                    client.setBirthdate(rs.getDate(ClientEntity.columnBirthdate));
-                    client.setPassportSerNum(rs.getString(ClientEntity.columnPasport).trim());
-                    client.setPhone(rs.getString(ClientEntity.columnPhone).trim());
-                    client.setLogin(rs.getString(ClientEntity.columnLogin).trim());
-                    client.setPass(rs.getString(ClientEntity.columnPass).trim());
+                    ClientEntity client = new ClientEntity(rs.getInt(ClientEntity.columnIdClient), rs.getString(ClientEntity.columnName).trim(),
+                            rs.getString(ClientEntity.columnSurname).trim(), rs.getString(ClientEntity.columnMiddlename).trim(),
+                            rs.getDate(ClientEntity.columnBirthdate), rs.getString(ClientEntity.columnPasport).trim(),
+                            rs.getString(ClientEntity.columnPhone).trim(), rs.getString(ClientEntity.columnLogin).trim(),
+                            rs.getString(ClientEntity.columnPass).trim());
                     result.add(client);
                 }
             }

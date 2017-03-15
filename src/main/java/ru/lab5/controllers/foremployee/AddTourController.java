@@ -3,12 +3,14 @@ package ru.lab5.controllers.foremployee;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import ru.lab5.Entities.DestinationEntity;
 import ru.lab5.Entities.TourEntity;
+import ru.lab5.exceptions.ExceptionHandling;
 import ru.lab5.services.IDestinationService;
 import ru.lab5.services.ITourService;
 
@@ -32,12 +34,14 @@ public class AddTourController {
     }
 
     @RequestMapping(value = "/addTour", method = RequestMethod.POST)
+    @ExceptionHandler({ExceptionHandling.class})
     public ModelAndView showRegistrationPage(@ModelAttribute("tour") TourEntity tour) {
         ModelAndView modelAndView = null;
         if (tourService.addTour(tour)) {
             modelAndView = new ModelAndView("redirect:/viewTour");
         } else {
             modelAndView = new ModelAndView("viperror");
+            throw new ExceptionHandling("I can't add new Tour");
         }
         return modelAndView;
     }

@@ -27,13 +27,25 @@ public class ClientEntity implements Serializable {
     private String phone;
     private String login;
     private String pass;
-    private Collection<OrderEntity> orderssByIdClient;
 
     public ClientEntity() {
     }
 
     public ClientEntity(String name, String surname, String middlename, Date birthdate, String passportSerNum,
                         String phone, String login, String pass) {
+        this.name = name;
+        this.surname = surname;
+        this.middlename = middlename;
+        this.birthdate = birthdate;
+        this.passportSerNum = passportSerNum;
+        this.phone = phone;
+        this.login = login;
+        this.pass = pass;
+    }
+
+    public ClientEntity(int id, String name, String surname, String middlename, Date birthdate, String passportSerNum,
+                        String phone, String login, String pass) {
+        this.idClient = id;
         this.name = name;
         this.surname = surname;
         this.middlename = middlename;
@@ -160,13 +172,4 @@ public class ClientEntity implements Serializable {
                 ", login='" + login + '\'' +
                 '}';
     }
-
-    public Collection<OrderEntity> getOrderssByIdClient() {
-        return orderssByIdClient;
-    }
-
-    public void setOrderssByIdClient(Collection<OrderEntity> orderssByIdClient) {
-        this.orderssByIdClient = orderssByIdClient;
-    }
-
 }

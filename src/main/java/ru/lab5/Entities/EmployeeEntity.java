@@ -27,12 +27,22 @@ public class EmployeeEntity implements Serializable {
     private String password;
     private String email;
     private String role;
-    private Collection<OrderEntity> orderssByIdEmployee;
 
     public EmployeeEntity() {
     }
 
     public EmployeeEntity(String name, String surname, String phone, String login, String password, String email, String role) {
+        this.name = name;
+        this.surname = surname;
+        this.phone = phone;
+        this.login = login;
+        this.password = password;
+        this.email = email;
+        this.role = role;
+    }
+
+    public EmployeeEntity(int id, String name, String surname, String phone, String login, String password, String email, String role) {
+        this.idEmployee = id;
         this.name = name;
         this.surname = surname;
         this.phone = phone;
@@ -145,13 +155,5 @@ public class EmployeeEntity implements Serializable {
                 ", email='" + email + '\'' +
                 ", role='" + role + '\'' +
                 '}';
-    }
-
-    public Collection<OrderEntity> getOrderssByIdEmployee() {
-        return orderssByIdEmployee;
-    }
-
-    public void setOrderssByIdEmployee(Collection<OrderEntity> orderssByIdEmployee) {
-        this.orderssByIdEmployee = orderssByIdEmployee;
     }
 }

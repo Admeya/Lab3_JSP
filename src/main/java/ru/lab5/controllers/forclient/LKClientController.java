@@ -32,11 +32,6 @@ public class LKClientController extends HttpServlet {
         return new ModelAndView("privateCabinetClient");
     }
 
-//    @ExceptionHandler(value = Exception.class)
-//    public void handle(){
-//
-//    }
-
     @RequestMapping(value = "/lkClient", method = RequestMethod.POST)
     public void postLKCLientPage(HttpServletRequest req) {
         catchUser(req);

@@ -1,6 +1,7 @@
 package ru.lab5.controllers.login;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -8,6 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 import ru.lab5.Entities.ClientEntity;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import ru.lab5.exceptions.ExceptionHandling;
 import ru.lab5.services.IClientService;
 
 import javax.servlet.http.HttpServlet;
@@ -33,12 +35,14 @@ public class RegistrationController extends HttpServlet {
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
+    @ExceptionHandler({ExceptionHandling.class})
     public ModelAndView showRegistrationPage(@ModelAttribute("client") ClientEntity client) {
         ModelAndView modelAndView = null;
         if (clientService.registration(client)) {
             modelAndView = new ModelAndView("redirect:/login");
         } else {
             modelAndView = new ModelAndView("error");
+            throw new ExceptionHandling("I can't register new Client");
         }
         return modelAndView;
     }

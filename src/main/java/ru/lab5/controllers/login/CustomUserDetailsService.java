@@ -38,7 +38,7 @@ public class CustomUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("User details not found with this username: " + s);
         }
         List<SimpleGrantedAuthority> authList = new ArrayList<>();
-        authList.add(new SimpleGrantedAuthority("ROLE_USER"));
+        authList.add(new SimpleGrantedAuthority("ROLE_CLIENT"));
 
         request.getSession().setAttribute("PRINCIPAL", newUser);
         System.out.println(newUser.getPass().trim() + " non encrypted password");

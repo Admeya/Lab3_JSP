@@ -1,6 +1,7 @@
 package ru.lab5.DAO;
 
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import ru.lab5.Entities.ClientEntity;
 import ru.lab5.Entities.OrderEntity;
 import ru.lab5.Entities.TourEntity;
@@ -12,7 +13,7 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
-@Component
+@Repository
 public class OrderDao extends AbstractDao<OrderEntity> {
 
     public static final String GET_ALL_ORDERS = "SELECT o." + OrderEntity.columnId + ", o." + OrderEntity.columnIdEmployee + ", o." +
@@ -45,16 +46,9 @@ public class OrderDao extends AbstractDao<OrderEntity> {
         LinkedList<OrderEntity> result = new LinkedList<OrderEntity>();
         try {
             while (rs.next()) {
-                OrderEntity order = new OrderEntity();
-                order.setIdOrder(rs.getInt(OrderEntity.columnId));
-                order.setIdEmployee(rs.getInt(OrderEntity.columnIdEmployee));
-                order.setIdClient(rs.getInt(OrderEntity.columnIdClient));
-                order.setIdTour(rs.getInt(OrderEntity.columnIdTour));
-                order.setCheckoutDate(rs.getDate(OrderEntity.columnCheckoutDate).toLocalDate());
-                order.setNameClient(rs.getString(ClientEntity.columnName));
-                order.setSurnameClient(rs.getString(ClientEntity.columnSurname));
-                order.setPhoneClient(rs.getString(ClientEntity.columnPhone));
-                order.setNameTour(rs.getString("tourName"));
+                OrderEntity order = new OrderEntity(rs.getInt(OrderEntity.columnId), rs.getInt(OrderEntity.columnIdEmployee),
+                        rs.getInt(OrderEntity.columnIdClient), rs.getInt(OrderEntity.columnIdTour), rs.getDate(OrderEntity.columnCheckoutDate).toLocalDate(),
+                        rs.getString(ClientEntity.columnName), rs.getString(ClientEntity.columnSurname), rs.getString(ClientEntity.columnPhone), rs.getString("tourName"));
                 result.add(order);
             }
         } catch (SQLException e) {

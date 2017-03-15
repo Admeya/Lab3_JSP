@@ -7,8 +7,6 @@ import java.io.Serializable;
 /**
  * Created by Ирина on 17.02.2017.
  */
-@XmlType(propOrder = {"idDestination", "idCountry", "resort", "hotel", "countryByIdCountry", "catalogueTourssByIdDestination"}, name = "DestinationEntity")
-@XmlRootElement
 public class DestinationEntity implements Serializable {
     public static String tableName = "destination";
     public static String columnId = "id_destination";
@@ -22,6 +20,17 @@ public class DestinationEntity implements Serializable {
     private String hotel;
 
     private String nameCountry;
+
+    public DestinationEntity() {
+    }
+
+    public DestinationEntity(Integer idDestination, Integer idCountry, String resort, String hotel, String nameCountry) {
+        this.idDestination = idDestination;
+        this.idCountry = idCountry;
+        this.resort = resort;
+        this.hotel = hotel;
+        this.nameCountry = nameCountry;
+    }
 
     public String getNameCountry() {
         return nameCountry;

@@ -28,6 +28,22 @@ public class TourEntity implements Serializable{
     private String resort;
     private String hotel;
 
+    public TourEntity() {
+    }
+
+    public TourEntity(Integer idTour, String name, Date dateStart, Date dateEnd, Integer cost, Integer idDestination, Integer idCountry, String nameCountry, String resort, String hotel) {
+        this.idTour = idTour;
+        this.name = name;
+        this.dateStart = dateStart;
+        this.dateEnd = dateEnd;
+        this.cost = cost;
+        this.idDestination = idDestination;
+        this.idCountry = idCountry;
+        this.nameCountry = nameCountry;
+        this.resort = resort;
+        this.hotel = hotel;
+    }
+
     public Integer getIdTour() {
         return idTour;
     }

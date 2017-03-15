@@ -1,6 +1,7 @@
 package ru.lab5.DAO;
 
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import ru.lab5.Entities.ClientEntity;
 import ru.lab5.Entities.EmployeeEntity;
 import ru.lab5.common.SaltPassword;
@@ -11,7 +12,7 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-@Component
+@Repository
 public class EmployeeDao extends AbstractDao<EmployeeEntity> {
     public static final String GET_ID_BY_STRING_PARAM = "SELECT * FROM " + EmployeeEntity.tableName + " WHERE %s = ?";
 
@@ -62,15 +63,10 @@ public class EmployeeDao extends AbstractDao<EmployeeEntity> {
             } else {
                 rs.beforeFirst();
                 while (rs.next()) {
-                    EmployeeEntity employee = new EmployeeEntity();
-                    employee.setIdEmployee(rs.getInt(EmployeeEntity.columnId));
-                    employee.setName(rs.getString(EmployeeEntity.columnName).trim());
-                    employee.setSurname(rs.getString(EmployeeEntity.columnSurname).trim());
-                    employee.setPhone(rs.getString(EmployeeEntity.columnPhone).trim());
-                    employee.setLogin(rs.getString(EmployeeEntity.columnLogin).trim());
-                    employee.setPassword(rs.getString(EmployeeEntity.columnPass).trim());
-                    employee.setEmail(rs.getString(EmployeeEntity.columnMail).trim());
-                    employee.setRole(rs.getString(EmployeeEntity.columnRole).trim());
+                    EmployeeEntity employee = new EmployeeEntity(rs.getInt(EmployeeEntity.columnId), rs.getString(EmployeeEntity.columnName).trim(),
+                            rs.getString(EmployeeEntity.columnSurname).trim(), rs.getString(EmployeeEntity.columnPhone).trim(),
+                            rs.getString(EmployeeEntity.columnLogin).trim(), rs.getString(EmployeeEntity.columnPass).trim(),
+                            rs.getString(EmployeeEntity.columnMail).trim(), rs.getString(EmployeeEntity.columnRole).trim());
                     result.add(employee);
                 }
             }

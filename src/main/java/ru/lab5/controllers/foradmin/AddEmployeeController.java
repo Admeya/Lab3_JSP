@@ -3,11 +3,13 @@ package ru.lab5.controllers.foradmin;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import ru.lab5.Entities.EmployeeEntity;
+import ru.lab5.exceptions.ExceptionHandling;
 import ru.lab5.services.IEmployeeService;
 
 /**
@@ -25,12 +27,14 @@ public class AddEmployeeController {
     }
 
     @RequestMapping(value = "/addEmpLK", method = RequestMethod.POST)
+    @ExceptionHandler({ExceptionHandling.class})
     public ModelAndView showRegistrationPage(@ModelAttribute("employee") EmployeeEntity employee) {
         ModelAndView modelAndView = null;
         if (employeeService.addEmployee(employee)) {
             modelAndView = new ModelAndView("redirect:/lkAdmin");
         } else {
             modelAndView = new ModelAndView("viperror");
+            throw new ExceptionHandling("I can't add new Employee");
         }
         return modelAndView;
     }

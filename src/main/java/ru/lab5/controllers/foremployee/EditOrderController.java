@@ -3,12 +3,14 @@ package ru.lab5.controllers.foremployee;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ru.lab5.Entities.EmployeeEntity;
 import ru.lab5.Entities.OrderEntity;
+import ru.lab5.exceptions.ExceptionHandling;
 import ru.lab5.services.IEmployeeService;
 import ru.lab5.services.IOrderService;
 
@@ -36,6 +38,7 @@ public class EditOrderController extends HttpServlet {
     }
 
     @RequestMapping(value = "/editOrder", method = RequestMethod.GET)
+    @ExceptionHandler({ExceptionHandling.class})
     public ModelAndView getEditLKCLientPage(@RequestParam(name = "idEmpl", required = false) Integer idEmpl) {
         ModelAndView modelAndView = null;
         if (idEmpl != null) {
@@ -49,10 +52,10 @@ public class EditOrderController extends HttpServlet {
             int idDefaultEmployee = employeeService.getIdByParam(EmployeeEntity.columnName, "Default");
             List<OrderEntity> newOrders = orderService.getOrdersByEmployee(idDefaultEmployee);
             modelAndView.addObject("newOrders", newOrders);
-
-
-        } else
+        } else {
             modelAndView = new ModelAndView("error");
+            throw new ExceptionHandling("I don't get idEmpl");
+        }
         return modelAndView;
     }
 

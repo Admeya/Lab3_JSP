@@ -23,6 +23,25 @@ public class OrderEntity implements Serializable{
     private String phoneClient;
     private String nameTour;
 
+    public OrderEntity(Integer idOrder, Integer idEmployee, Integer idClient, Integer idTour, LocalDate checkoutDate, String nameClient, String surnameClient, String phoneClient, String nameTour) {
+        this.idOrder = idOrder;
+        this.idEmployee = idEmployee;
+        this.idClient = idClient;
+        this.idTour = idTour;
+        this.checkoutDate = checkoutDate;
+        this.nameClient = nameClient;
+        this.surnameClient = surnameClient;
+        this.phoneClient = phoneClient;
+        this.nameTour = nameTour;
+    }
+
+    public OrderEntity(Integer idEmployee, Integer idClient, Integer idTour, LocalDate checkoutDate) {
+        this.idEmployee = idEmployee;
+        this.idClient = idClient;
+        this.idTour = idTour;
+        this.checkoutDate = checkoutDate;
+    }
+
     public Integer getIdOrder() {
         return idOrder;
     }

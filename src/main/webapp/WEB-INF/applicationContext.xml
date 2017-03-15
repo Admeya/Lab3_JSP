@@ -17,9 +17,10 @@ http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
     </beans:bean>
 
     <http>
-        <intercept-url pattern="/index*"
+        <intercept-url pattern="/index"
                        access="hasRole('ROLE_USER') OR hasRole('ROLE_ANONYMOUS') OR hasRole('ROLE_ADMIN')"/>
-        <intercept-url pattern="/viewLKClient*" access="hasRole('ROLE_USER')"/>
+        <intercept-url pattern="/viewLKClient" access="hasRole('ROLE_CLIENT')"/>
+        <intercept-url pattern="/lkClient" access="hasRole('ROLE_CLIENT')"/>
         <form-login login-page="/login"
                     login-processing-url="/j_spring_security_check"
                     username-parameter="j_username"

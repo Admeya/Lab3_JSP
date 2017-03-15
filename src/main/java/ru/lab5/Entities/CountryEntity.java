@@ -8,15 +8,20 @@ import java.util.Collection;
 /**
  * Created by Ирина on 17.02.2017.
  */
-@XmlType(propOrder = { "idCountry", "nameCountry", "destinationPlacesByIdCountry"}, name = "CountryEntity")
-@XmlRootElement
 public class CountryEntity implements Serializable{
     public static String tableName = "country";
     public static String columnId = "id_country";
     public static String columnName = "name_country";
     private Integer idCountry;
     private String nameCountry;
-    private Collection<DestinationEntity> destinationPlacesByIdCountry;
+
+    public CountryEntity(Integer idCountry, String nameCountry) {
+        this.idCountry = idCountry;
+        this.nameCountry = nameCountry;
+    }
+
+    public CountryEntity() {
+    }
 
     public Integer getIdCountry() {
         return idCountry;
@@ -51,9 +56,7 @@ public class CountryEntity implements Serializable{
     public String toString() {
         return "CountryEntity{" +
                 "idCountry=" + idCountry +
-                ", nameCountry='" + nameCountry + '\'' +
-                ", destinationPlacesByIdCountry=" + destinationPlacesByIdCountry +
-                '}';
+                ", nameCountry='" + nameCountry + '}';
     }
 
     @Override
@@ -61,13 +64,5 @@ public class CountryEntity implements Serializable{
         int result = idCountry != null ? idCountry.hashCode() : 0;
         result = 31 * result + (nameCountry != null ? nameCountry.hashCode() : 0);
         return result;
-    }
-
-    public Collection<DestinationEntity> getDestinationPlacesByIdCountry() {
-        return destinationPlacesByIdCountry;
-    }
-
-    public void setDestinationPlacesByIdCountry(Collection<DestinationEntity> destinationPlacesByIdCountry) {
-        this.destinationPlacesByIdCountry = destinationPlacesByIdCountry;
     }
 }

@@ -1,6 +1,7 @@
 package ru.lab5.DAO;
 
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import ru.lab5.Entities.CountryEntity;
 
 import java.sql.PreparedStatement;
@@ -9,7 +10,7 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-@Component
+@Repository
 public class CountryDao extends AbstractDao<CountryEntity> {
 
     @Override
@@ -34,9 +35,7 @@ public class CountryDao extends AbstractDao<CountryEntity> {
         LinkedList<CountryEntity> result = new LinkedList<CountryEntity>();
         try {
             while (rs.next()) {
-                CountryEntity country = new CountryEntity();
-                country.setIdCountry(rs.getInt(CountryEntity.columnId));
-                country.setNameCountry(rs.getString(CountryEntity.columnName).trim());
+                CountryEntity country = new CountryEntity(rs.getInt(CountryEntity.columnId), rs.getString(CountryEntity.columnName).trim());
                 result.add(country);
             }
         } catch (SQLException e) {

@@ -1,6 +1,7 @@
 package ru.lab5.DAO;
 
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import ru.lab5.Entities.CountryEntity;
 import ru.lab5.Entities.DestinationEntity;
 
@@ -10,7 +11,7 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-@Component
+@Repository
 public class DestinationDao extends AbstractDao<DestinationEntity> {
 
     public static final String GET_ALL_DESTINATION = "SELECT d." + DestinationEntity.columnId + ", d." + DestinationEntity.columnIdCountry + ", d." +
@@ -47,12 +48,8 @@ public class DestinationDao extends AbstractDao<DestinationEntity> {
         LinkedList<DestinationEntity> result = new LinkedList<DestinationEntity>();
         try {
             while (rs.next()) {
-                DestinationEntity dest = new DestinationEntity();
-                dest.setIdDestination(rs.getInt(DestinationEntity.columnId));
-                dest.setIdCountry(rs.getInt(DestinationEntity.columnIdCountry));
-                dest.setResort(rs.getString(DestinationEntity.columnResort).trim());
-                dest.setHotel(rs.getString(DestinationEntity.columnHotel).trim());
-                dest.setNameCountry(rs.getString(CountryEntity.columnName));
+                DestinationEntity dest = new DestinationEntity(rs.getInt(DestinationEntity.columnId), rs.getInt(DestinationEntity.columnIdCountry),
+                        rs.getString(DestinationEntity.columnResort).trim(), rs.getString(DestinationEntity.columnHotel).trim(), rs.getString(CountryEntity.columnName));
                 result.add(dest);
             }
         } catch (SQLException e) {

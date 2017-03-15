@@ -3,12 +3,14 @@ package ru.lab5.controllers.login;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ru.lab5.Entities.EmployeeEntity;
 import ru.lab5.exceptions.EmployeeDAOException;
+import ru.lab5.exceptions.ExceptionHandling;
 import ru.lab5.services.IEmployeeService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,6 +38,7 @@ public class VIPLoginController {
     }
 
     @RequestMapping(value = "/viplogin", method = RequestMethod.POST)
+    @ExceptionHandler({ExceptionHandling.class})
     public ModelAndView postRequestPage(HttpServletRequest req, @RequestParam(name = "login") String login, @RequestParam(name = "password") String password) {
         ModelAndView modelAndView = null;
         HttpSession session = req.getSession();
@@ -55,10 +58,12 @@ public class VIPLoginController {
                     }
                 } else {
                     modelAndView = new ModelAndView("viperror");
+                    throw new ExceptionHandling("I don't get instance of Employee");
                 }
             } catch (EmployeeDAOException e) {
                 logger.error(e);
                 modelAndView = new ModelAndView("error");
+                throw new ExceptionHandling("I don't get login or password");
             }
         }
         return modelAndView;

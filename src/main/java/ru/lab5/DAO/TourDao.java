@@ -1,16 +1,18 @@
 package ru.lab5.DAO;
 
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import ru.lab5.Entities.CountryEntity;
 import ru.lab5.Entities.DestinationEntity;
 import ru.lab5.Entities.TourEntity;
-import org.springframework.stereotype.Component;
 
-import java.sql.*;
-import java.util.ArrayList;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-@Component
+@Repository
 public class TourDao extends AbstractDao<TourEntity> {
 
     public static final String GET_ALL_TOURS = "SELECT t." + TourEntity.columnId + ", t." + TourEntity.columnName + ", t." +
@@ -49,17 +51,11 @@ public class TourDao extends AbstractDao<TourEntity> {
         LinkedList<TourEntity> result = new LinkedList<TourEntity>();
         try {
             while (rs.next()) {
-                TourEntity tour = new TourEntity();
-                tour.setIdTour(rs.getInt(TourEntity.columnId));
-                tour.setName(rs.getString(TourEntity.columnName).trim());
-                tour.setDateStart(rs.getDate(TourEntity.columnDateStart));
-                tour.setDateEnd(rs.getDate(TourEntity.columnDateEnd));
-                tour.setCost(rs.getInt(TourEntity.columnCost));
-                tour.setIdDestination(rs.getInt(TourEntity.columnIdDestination));
-                tour.setIdCountry(rs.getInt(CountryEntity.columnId));
-                tour.setNameCountry(rs.getString(CountryEntity.columnName));
-                tour.setResort(rs.getString(DestinationEntity.columnResort));
-                tour.setHotel(rs.getString(DestinationEntity.columnHotel));
+                TourEntity tour = new TourEntity(rs.getInt(TourEntity.columnId), rs.getString(TourEntity.columnName).trim(),
+                        rs.getDate(TourEntity.columnDateStart), rs.getDate(TourEntity.columnDateEnd),
+                        rs.getInt(TourEntity.columnCost), rs.getInt(TourEntity.columnIdDestination),
+                        rs.getInt(CountryEntity.columnId), rs.getString(CountryEntity.columnName),
+                        rs.getString(DestinationEntity.columnResort), rs.getString(DestinationEntity.columnHotel));
                 result.add(tour);
             }
         } catch (SQLException e) {

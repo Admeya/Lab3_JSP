@@ -3,13 +3,11 @@ package ru.lab5.controllers.foremployee;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ru.lab5.Entities.CountryEntity;
 import ru.lab5.Entities.EmployeeEntity;
+import ru.lab5.exceptions.ExceptionHandling;
 import ru.lab5.services.ICountryService;
 
 /**
@@ -27,6 +25,7 @@ public class EditCountryController {
     }
 
     @RequestMapping(value = "/editCountry", method = RequestMethod.GET)
+    @ExceptionHandler({ExceptionHandling.class})
     public ModelAndView getEditCountryPage(@RequestParam(name = "idCountry", required = false) Integer idCountry) {
         ModelAndView modelAndView = null;
         if (idCountry != null) {
@@ -35,17 +34,20 @@ public class EditCountryController {
             modelAndView.addObject("Country", country);
         } else {
             modelAndView = new ModelAndView("error");
+            throw new ExceptionHandling("I don't get idCountry");
         }
         return modelAndView;
     }
 
     @RequestMapping(value = "/editCountry", method = RequestMethod.POST)
+    @ExceptionHandler({ExceptionHandling.class})
     public ModelAndView postEditCountryPage(@ModelAttribute("Country") CountryEntity country) {
         ModelAndView modelAndView = null;
         if (countryService.updateCountry(country)) {
             modelAndView = new ModelAndView("redirect:/viewCountry");
         } else {
             modelAndView = new ModelAndView("error");
+            throw new ExceptionHandling("I can't add update Country");
         }
         return modelAndView;
     }

@@ -152,5 +152,20 @@ public abstract class AbstractDao<T extends Serializable> implements GenericDAO<
         }
         return list;
     }
+
+    @Override
+    public List<T> selectByLogin(String login) {
+        List<T> list = new ArrayList<T>();
+        String sql = getSelectAllQuery() + " where login = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
+            ps.setString(1, login);
+            ResultSet resultSet = ps.executeQuery();
+            list = parseResultSet(resultSet);
+
+        } catch (SQLException e) {
+            logger.trace(e);
+        }
+        return list;
+    }
 }
 

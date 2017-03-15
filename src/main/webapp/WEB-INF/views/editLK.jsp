@@ -22,10 +22,6 @@
                 <td><input type="text" name="login" id="login" value="${Client.login}"></td>
             </tr>
             <tr>
-                <td><label for="pass">Password:</label></td>
-                <td><input type="text" name="pass" id="pass" value="${Client.pass}"></td>
-            </tr>
-            <tr>
                 <td><label for="surname">Фамилия:</label></td>
                 <td><input type="text" name="surname" id="surname" value="${Client.surname}"></td>
             </tr>

@@ -3,6 +3,7 @@ package ru.lab5.DAO;
 import org.springframework.stereotype.Component;
 import ru.lab5.Entities.ClientEntity;
 import ru.lab5.Entities.EmployeeEntity;
+import ru.lab5.common.SaltPassword;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -30,7 +31,7 @@ public class EmployeeDao extends AbstractDao<EmployeeEntity> {
     @Override
     public String getUpdateQuery() {
         return "UPDATE " + EmployeeEntity.tableName + " SET " + EmployeeEntity.columnName + " = ? ," + EmployeeEntity.columnSurname + " = ?," +
-                EmployeeEntity.columnPhone + " = ?," + EmployeeEntity.columnLogin + " = ?," + EmployeeEntity.columnPass + " = ?," +
+                EmployeeEntity.columnPhone + " = ?," + EmployeeEntity.columnLogin + " = ?," +
                 EmployeeEntity.columnMail + " = ?, " + EmployeeEntity.columnRole + " = ? WHERE " +
                 EmployeeEntity.columnId + " = ?";
     }
@@ -43,7 +44,7 @@ public class EmployeeDao extends AbstractDao<EmployeeEntity> {
             statement.setString(2, object.getSurname());
             statement.setString(3, object.getPhone());
             statement.setString(4, object.getLogin());
-            statement.setString(5, object.getPassword());
+            statement.setString(5, SaltPassword.encryptPass(object.getPassword()));
             statement.setString(6, object.getEmail());
             statement.setString(7, object.getRole());
             logger.trace(statement);
@@ -86,10 +87,9 @@ public class EmployeeDao extends AbstractDao<EmployeeEntity> {
             statement.setString(2, object.getSurname());
             statement.setString(3, object.getPhone());
             statement.setString(4, object.getLogin());
-            statement.setString(5, object.getPassword());
-            statement.setString(6, object.getEmail());
-            statement.setString(7, object.getRole());
-            statement.setInt(8, object.getIdEmployee());
+            statement.setString(5, object.getEmail());
+            statement.setString(6, object.getRole());
+            statement.setInt(7, object.getIdEmployee());
             logger.trace(statement);
         } catch (Exception e) {
             logger.error("Возникла ошибка при подготовке данных для вставки в таблицу " + ClientEntity.tableName, e);

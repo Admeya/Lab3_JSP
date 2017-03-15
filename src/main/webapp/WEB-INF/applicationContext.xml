@@ -1,0 +1,46 @@
+<beans:beans xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns="http://www.springframework.org/schema/security"
+             xsi:schemaLocation="
+http://www.springframework.org/schema/security
+http://www.springframework.org/schema/security/spring-security-4.2.xsd
+http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+    <beans:bean id="dataSource"
+                class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+
+        <beans:property name="driverClassName" value="org.postgresql.Driver"/>
+        <beans:property name="url"
+                        value="jdbc:postgresql://localhost:5432/Tourfirm2"/>
+        <beans:property name="username" value="postgres"/>
+        <beans:property name="password" value="root"/>
+    </beans:bean>
+
+    <http>
+        <intercept-url pattern="/index*"
+                       access="hasRole('ROLE_USER') OR hasRole('ROLE_ANONYMOUS') OR hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/viewLKClient*" access="hasRole('ROLE_USER')"/>
+        <form-login login-page="/login"
+                    login-processing-url="/j_spring_security_check"
+                    username-parameter="j_username"
+                    password-parameter="j_password"
+                    default-target-url="/"
+                    authentication-failure-url="/auth?error=true"/>
+        <logout logout-url="/logout" logout-success-url="/" invalidate-session="true"/>
+        <anonymous username="guest" granted-authority="ROLE_ANONYMOUS"/>
+        <csrf disabled="true"/>
+    </http>
+
+    <beans:bean id="customUserDetailService" class="ru.lab5.controllers.login.CustomUserDetailsService"></beans:bean>
+
+    <authentication-manager>
+        <authentication-provider user-service-ref="customUserDetailService">
+            <password-encoder ref="encoder"/>
+        </authentication-provider>
+    </authentication-manager>
+
+    <beans:bean id="encoder"
+                class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+        <beans:constructor-arg name="strength" value="10"/>
+    </beans:bean>
+</beans:beans>

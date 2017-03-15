@@ -12,16 +12,18 @@
     <title>Туры</title>
 </head>
 <body>
-<div align="right">
-    <a href="/tour/login">Вход</a>&nbsp;&nbsp;&nbsp;
-    <a href="/tour/registration">Регистрация</a>&nbsp;&nbsp;&nbsp;
-
-</div>
-
-<div align="left">
-    <a href="/tour/lkClient">Личный кабинет</a><br>
-    ${Client.name}, <a href="/tour/logout">Выход</a>
-</div>
+<c:if test="${empty Client}">
+    <div align="right">
+        <a href="/tour/login">Вход</a>&nbsp;&nbsp;&nbsp;
+        <a href="/tour/registration">Регистрация</a>&nbsp;&nbsp;&nbsp;
+    </div>
+</c:if>
+<c:if test="${not empty Client}">
+    <div align="left">
+        <a href="/tour/lkClient">Личный кабинет</a><br>
+            ${Client.name}, <a href="/tour/logout">Выход</a>
+    </div>
+</c:if>
 
 <h2 align="center"> У нас самые лучшие туры</h2>
 

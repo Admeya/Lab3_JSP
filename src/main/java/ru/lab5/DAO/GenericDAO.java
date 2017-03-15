@@ -33,6 +33,8 @@ public interface GenericDAO<T extends Serializable> {
 
     List<T> selectByLoginAndPassword(String login, String pass);
 
+    List<T> selectByLogin(String login);
+
     default int selectIdByParam(String columnName, String value) {
         return 0;
     }

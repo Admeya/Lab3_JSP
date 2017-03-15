@@ -14,4 +14,6 @@ public interface IClientService {
     ClientEntity getClientByID(int idJournal);
 
     boolean updateClient(ClientEntity cli);
+
+    ClientEntity authorize(String login);
 }

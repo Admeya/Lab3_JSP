@@ -11,18 +11,20 @@
 </div>
 <div align="right">
     <a href="/tour/registration">Регистрация</a>
-    <form action="/tour/login" method="post">
+
+    <c:url value="/j_spring_security_check" var="loginUrl"/>
+    <form action="${loginUrl}" method="post">
         <table>
             <tr>
-                <td><label for="login">Login:</label></td>
-                <td><input type="text" name="login" id="login" value=""></td>
+                <td><label for="j_username">Login:</label></td>
+                <td><input type="text" name="j_username" id="j_username"></td>
             </tr>
             <tr>
-                <td><label for="password">Password:</label></td>
-                <td><input type="password" name="password" id="password" value=""></td>
+                <td><label for="j_password">Password:</label></td>
+                <td><input type="password" name="j_password" id="j_password"></td>
             </tr>
         </table>
-        <input type="submit" value="Войти" formmethod="post">
+        <button type="submit">Войти</button>
     </form>
 </div>
 

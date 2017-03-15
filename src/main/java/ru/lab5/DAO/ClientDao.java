@@ -1,7 +1,12 @@
 package ru.lab5.DAO;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.dao.SaltSource;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.lab5.Entities.ClientEntity;
 import org.springframework.stereotype.Component;
+import ru.lab5.common.SaltPassword;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,7 +16,6 @@ import java.util.List;
 
 @Component
 public class ClientDao extends AbstractDao<ClientEntity> {
-
     @Override
     public String getTableName() {
         return ClientEntity.tableName;
@@ -29,7 +33,7 @@ public class ClientDao extends AbstractDao<ClientEntity> {
     public String getUpdateQuery() {
         return "UPDATE " + ClientEntity.tableName + " SET " + ClientEntity.columnName + " = ? ," + ClientEntity.columnSurname + " = ?," +
                 ClientEntity.columnMiddlename + " = ?," + ClientEntity.columnBirthdate + " = ?," + ClientEntity.columnPasport + " = ?," +
-                ClientEntity.columnPhone + " = ?, " + ClientEntity.columnLogin + " = ?, " + ClientEntity.columnPass + " = ? WHERE " +
+                ClientEntity.columnPhone + " = ?, " + ClientEntity.columnLogin + " = ? WHERE " +
                 ClientEntity.columnIdClient + " = ?";
     }
 
@@ -71,7 +75,7 @@ public class ClientDao extends AbstractDao<ClientEntity> {
             statement.setString(5, object.getPassportSerNum());
             statement.setString(6, object.getPhone());
             statement.setString(7, object.getLogin());
-            statement.setString(8, object.getPass());
+            statement.setString(8, SaltPassword.encryptPass(object.getPass().trim()));
             logger.trace(statement);
         } catch (Exception e) {
             logger.error("Возникла ошибка при подготовке данных для вставки в таблицу " + ClientEntity.tableName, e);
@@ -88,8 +92,7 @@ public class ClientDao extends AbstractDao<ClientEntity> {
             statement.setString(5, object.getPassportSerNum());
             statement.setString(6, object.getPhone());
             statement.setString(7, object.getLogin());
-            statement.setString(8, object.getPass());
-            statement.setInt(9, object.getIdClient());
+            statement.setInt(8, object.getIdClient());
             logger.trace(statement);
         } catch (Exception e) {
             logger.error("Возникла ошибка при подготовке данных для вставки в таблицу " + ClientEntity.tableName, e);

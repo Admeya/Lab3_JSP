@@ -51,4 +51,11 @@ public class MainController {
         catchUser(req);
         return new ModelAndView("index");
     }
+
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public ModelAndView index(HttpServletRequest req) {
+        catchTour(req);
+        catchUser(req);
+        return new ModelAndView("index");
+    }
 }

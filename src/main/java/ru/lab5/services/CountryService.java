@@ -4,10 +4,9 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.lab5.DAO.CountryDao;
-import ru.lab5.DAO.TourDao;
-import ru.lab5.Entities.CountryEntity;
-import ru.lab5.Entities.EmployeeEntity;
-import ru.lab5.Entities.TourEntity;
+import ru.lab5.DAO.ICountryDao;
+import ru.lab5.Entities.Country;
+import ru.lab5.POJO.CountryDTO;
 import ru.lab5.common.ConnectionPool;
 import ru.lab5.controllers.foradmin.AddEmployeeController;
 
@@ -22,35 +21,34 @@ public class CountryService implements ICountryService {
     static Connection conn = ConnectionPool.getInstance().getConnection();
     private static Logger logger = Logger.getLogger(AddEmployeeController.class);
 
-    private CountryDao countryDao;
+    private ICountryDao countryDao;
 
     @Autowired
     public CountryService(CountryDao countryDao) {
-        countryDao.setConnection(conn);
         this.countryDao = countryDao;
     }
 
     @Override
-    public List<CountryEntity> getAllCountries() {
+    public List<Country> getAllCountries() {
         return countryDao.selectAll();
     }
 
     public boolean deleteCountry(int countryId) {
-        return countryDao.deleteById(CountryEntity.columnId, countryId);
+        return countryDao.deleteById(countryId);
     }
 
     @Override
-    public boolean updateCountry(CountryEntity country) {
+    public boolean updateCountry(CountryDTO country) {
         return countryDao.update(country);
     }
 
     @Override
-    public CountryEntity getCountryByID(int idCountry) {
-        return countryDao.selectByPK(idCountry, CountryEntity.columnId, new CountryEntity());
+    public Country getCountryByID(int idCountry) {
+        return countryDao.selectByPK(idCountry);
     }
 
     @Override
-    public boolean addCountry(CountryEntity country) {
+    public boolean addCountry(CountryDTO country) {
         return countryDao.insert(country);
     }
 }

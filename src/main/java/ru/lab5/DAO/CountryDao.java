@@ -1,8 +1,9 @@
 package ru.lab5.DAO;
 
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
-import ru.lab5.Entities.CountryEntity;
+import ru.lab5.Entities.Country;
+import ru.lab5.Entities.Tour;
+import ru.lab5.POJO.CountryDTO;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,56 +12,30 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Repository
-public class CountryDao extends AbstractDao<CountryEntity> {
+public class CountryDao implements ICountryDao {
 
     @Override
-    public String getTableName() {
-        return CountryEntity.tableName;
+    public List<Country> selectAll() {
+        return null;
     }
 
     @Override
-    public String getInsertQuery() {
-        return "INSERT INTO " + CountryEntity.tableName + " (" + CountryEntity.columnName + ") " +
-                "VALUES (?);";
+    public boolean update(CountryDTO country) {
+        return false;
     }
 
     @Override
-    public String getUpdateQuery() {
-        return "UPDATE " + CountryEntity.tableName + " SET " + CountryEntity.columnName + " = ? WHERE " +
-                CountryEntity.columnId + " = ?";
+    public Country selectByPK(int idCountry) {
+        return null;
     }
 
     @Override
-    public List<CountryEntity> parseResultSet(ResultSet rs) {
-        LinkedList<CountryEntity> result = new LinkedList<CountryEntity>();
-        try {
-            while (rs.next()) {
-                CountryEntity country = new CountryEntity(rs.getInt(CountryEntity.columnId), rs.getString(CountryEntity.columnName).trim());
-                result.add(country);
-            }
-        } catch (SQLException e) {
-            logger.error("SQL Exception при парсинге записей из таблицы " + CountryEntity.tableName + " в объект CountryDAO", e);
-        }
-        return result;
+    public boolean deleteById(int idCountry) {
+        return false;
     }
 
     @Override
-    protected void prepareStatementForInsert(PreparedStatement statement, CountryEntity object) {
-        try {
-            statement.setString(1, object.getNameCountry());
-        } catch (Exception e) {
-            logger.error("Возникла ошибка при подготовке данных для вставки в таблицу " + CountryEntity.tableName, e);
-        }
-    }
-
-    @Override
-    protected void prepareStatementForUpdate(PreparedStatement statement, CountryEntity object) {
-        try {
-            statement.setString(1, object.getNameCountry());
-            statement.setInt(2, object.getIdCountry());
-            logger.trace(statement);
-        } catch (Exception e) {
-            logger.error("Возникла ошибка при подготовке данных для вставки в таблицу " + CountryEntity.tableName, e);
-        }
+    public boolean insert(CountryDTO country) {
+        return false;
     }
 }

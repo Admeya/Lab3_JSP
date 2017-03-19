@@ -3,10 +3,10 @@ package ru.lab5.services;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.lab5.DAO.GenericDAO;
+import ru.lab5.DAO.IOrderDao;
 import ru.lab5.DAO.OrderDao;
-import ru.lab5.Entities.EmployeeEntity;
-import ru.lab5.Entities.OrderEntity;
+import ru.lab5.Entities.Order;
+import ru.lab5.POJO.OrderDTO;
 import ru.lab5.common.ConnectionPool;
 import ru.lab5.controllers.foradmin.AddEmployeeController;
 
@@ -21,20 +21,18 @@ public class OrderService implements IOrderService {
     static Connection conn = ConnectionPool.getInstance().getConnection();
     private static Logger logger = Logger.getLogger(AddEmployeeController.class);
 
-    private OrderDao orderDAO;
+    private IOrderDao orderDAO;
 
     @Autowired
     public OrderService(OrderDao orderDAO) {
         this.orderDAO = orderDAO;
     }
 
-    public boolean isInsert(OrderEntity order) {
-        orderDAO.setConnection(conn);
+    public boolean isInsert(OrderDTO order) {
         return orderDAO.insert(order);
     }
 
-    public List<OrderEntity> getOrdersByEmployee(int idEmployee) {
-        orderDAO.setConnection(conn);
-        return orderDAO.selectById(idEmployee, OrderEntity.columnIdEmployee);
+    public List<Order> getOrdersByEmployee(int idEmployee) {
+        return orderDAO.selectByPK(idEmployee);
     }
 }

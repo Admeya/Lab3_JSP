@@ -2,12 +2,13 @@ package ru.lab5.controllers;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import ru.lab5.Entities.ClientEntity;
-import ru.lab5.Entities.TourEntity;
+import ru.lab5.Entities.Client;
+import ru.lab5.Entities.Tour;
 import ru.lab5.services.ITourService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,17 +30,18 @@ public class MainController {
     }
 
     void catchTour(HttpServletRequest req) {
-        List<TourEntity> tours = tourService.getAllTours();
+        List<Tour> tours = tourService.getAllTours();
         req.setAttribute("Tours", tours);
     }
 
     void catchUser(HttpServletRequest req) {
         HttpSession session = ((HttpServletRequest) req).getSession();
-        ClientEntity user = (ClientEntity) session.getAttribute("PRINCIPAL");
+        Client user = (Client) session.getAttribute("PRINCIPAL");
         req.setAttribute("Client", user);
     }
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
+    @Secured({"ROLE_USER", "ROLE_CLIENT", "ROLE_ADMIN", "ROLE_ANONYMOUS"})
     public ModelAndView getRequestPage(HttpServletRequest req) {
         catchTour(req);
         catchUser(req);
@@ -47,12 +49,14 @@ public class MainController {
     }
 
     @RequestMapping(value = "/index", method = RequestMethod.POST)
+    @Secured({"ROLE_USER", "ROLE_CLIENT", "ROLE_ADMIN", "ROLE_ANONYMOUS"})
     public ModelAndView postRequestPage(HttpServletRequest req) {
         catchUser(req);
         return new ModelAndView("index");
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
+    @Secured({"ROLE_USER", "ROLE_CLIENT", "ROLE_ADMIN", "ROLE_ANONYMOUS"})
     public ModelAndView index(HttpServletRequest req) {
         catchTour(req);
         catchUser(req);

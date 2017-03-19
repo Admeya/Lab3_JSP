@@ -90,12 +90,20 @@ public abstract class AbstractDao<T extends Serializable> implements GenericDAO<
     public boolean insert(T object) {
         String sql = getInsertQuery();
         int count = 0;
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(sql);
             prepareStatementForInsert(statement, object);
             count = statement.executeUpdate();
             logger.trace(statement + " Insert " + count + " records");
         } catch (Exception e) {
-            logger.error("Возникла ошибка при вставке записей в БД: " + sql, e);
+            logger.error("Возникла ошибка при вставке записей в БД: " + statement, e);
+        } finally {
+            try {
+                statement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         if (count == 1)
             return true;

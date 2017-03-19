@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import ru.lab5.Entities.EmployeeEntity;
+import ru.lab5.Entities.Employee;
 import ru.lab5.exceptions.EmployeeDAOException;
 import ru.lab5.exceptions.ExceptionHandling;
 import ru.lab5.services.IEmployeeService;
@@ -43,27 +43,21 @@ public class VIPLoginController {
         ModelAndView modelAndView = null;
         HttpSession session = req.getSession();
         if (login != null && password != null) {
-            try {
-                EmployeeEntity employee = employeeService.isAuthorize(login, password);
-                if (employee != null) {
-                    req.setAttribute("Client", employee);
-                    if (employee.getRole().equals(EmployeeEntity.roleUser)) {
-                        session.setAttribute("EMPLOYER", employee);
-                        modelAndView = new ModelAndView("redirect:/lkEmpl");
-                    } else if (employee.getRole().equals(EmployeeEntity.roleAdmin)) {
-                        session.setAttribute("ADMIN", employee);
-                        List<EmployeeEntity> employees = employeeService.selectAll();
-                        req.setAttribute("Employees", employees);
-                        modelAndView = new ModelAndView("redirect:/lkAdmin");
-                    }
-                } else {
-                    modelAndView = new ModelAndView("viperror");
-                    throw new ExceptionHandling("I don't get instance of Employee");
+            Employee employee = employeeService.authorize(login);
+            if (employee != null) {
+                req.setAttribute("Client", employee);
+                if (employee.getRole().equals("user")) {
+                    session.setAttribute("EMPLOYER", employee);
+                    modelAndView = new ModelAndView("redirect:/lkEmpl");
+                } else if (employee.getRole().equals("admin")) {
+                    session.setAttribute("ADMIN", employee);
+                    List<Employee> employees = employeeService.selectAll();
+                    req.setAttribute("Employees", employees);
+                    modelAndView = new ModelAndView("redirect:/lkAdmin");
                 }
-            } catch (EmployeeDAOException e) {
-                logger.error(e);
-                modelAndView = new ModelAndView("error");
-                throw new ExceptionHandling("I don't get login or password");
+            } else {
+                modelAndView = new ModelAndView("viperror");
+                throw new ExceptionHandling("I don't get instance of Employee");
             }
         }
         return modelAndView;

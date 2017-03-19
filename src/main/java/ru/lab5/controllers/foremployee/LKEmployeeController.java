@@ -1,11 +1,12 @@
 package ru.lab5.controllers.foremployee;
 
 import org.apache.log4j.Logger;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import ru.lab5.Entities.EmployeeEntity;
+import ru.lab5.Entities.Employee;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -19,7 +20,7 @@ public class LKEmployeeController {
 
     void catchUser(HttpServletRequest req) {
         HttpSession session = ((HttpServletRequest) req).getSession();
-        EmployeeEntity user = (EmployeeEntity) session.getAttribute("EMPLOYER");
+        Employee user = (Employee) session.getAttribute("EMPLOYER");
         logger.trace("this session for " + user);
         req.setAttribute("Employee", user);
     }

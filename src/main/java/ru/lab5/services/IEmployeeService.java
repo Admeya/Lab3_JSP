@@ -1,6 +1,7 @@
 package ru.lab5.services;
 
-import ru.lab5.Entities.EmployeeEntity;
+import ru.lab5.Entities.Employee;
+import ru.lab5.POJO.EmployeeDTO;
 import ru.lab5.exceptions.EmployeeDAOException;
 
 import java.util.List;
@@ -9,17 +10,17 @@ import java.util.List;
  * Created by Ирина on 02.03.2017.
  */
 public interface IEmployeeService {
-    EmployeeEntity isAuthorize(String login, String pass) throws EmployeeDAOException;
+    Employee authorize(String login);
 
-    EmployeeEntity getClientByID(int idJournal);
+    Employee getClientByID(int idJournal);
 
-    boolean updateEmpl(EmployeeEntity cli);
+    boolean updateEmpl(EmployeeDTO cli);
 
-    List<EmployeeEntity> selectAll();
+    List<Employee> selectAll();
 
-    boolean addEmployee(EmployeeEntity employee);
+    int getIdByName(String name);
+
+    boolean addEmployee(EmployeeDTO employee);
 
     boolean deleteEmployee(int empId);
-
-    int getIdByParam(String column, String value);
 }

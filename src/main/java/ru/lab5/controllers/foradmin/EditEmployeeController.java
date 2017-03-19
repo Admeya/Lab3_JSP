@@ -2,10 +2,12 @@ package ru.lab5.controllers.foradmin;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import ru.lab5.Entities.EmployeeEntity;
+import ru.lab5.Entities.Employee;
+import ru.lab5.POJO.EmployeeDTO;
 import ru.lab5.exceptions.ExceptionHandling;
 import ru.lab5.services.IEmployeeService;
 
@@ -29,7 +31,7 @@ public class EditEmployeeController {
         ModelAndView modelAndView = null;
         if (idEmpl != null) {
             modelAndView = new ModelAndView("editEmployee");
-            EmployeeEntity employee = employeeService.getClientByID(idEmpl);
+            Employee employee = employeeService.getClientByID(idEmpl);
             modelAndView.addObject("Employee", employee);
         } else {
             modelAndView = new ModelAndView("error");
@@ -40,7 +42,7 @@ public class EditEmployeeController {
 
     @RequestMapping(value = "/editEmpLK", method = RequestMethod.POST)
     @ExceptionHandler({ExceptionHandling.class})
-    public ModelAndView getEditLKCLientPage(@ModelAttribute("employee") EmployeeEntity employee) {
+    public ModelAndView getEditLKCLientPage(@ModelAttribute("employee") EmployeeDTO employee) {
         ModelAndView modelAndView = null;
         if (employeeService.updateEmpl(employee)) {
             modelAndView = new ModelAndView("redirect:/lkAdmin");

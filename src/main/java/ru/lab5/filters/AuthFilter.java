@@ -1,7 +1,7 @@
 package ru.lab5.filters;
 
-import ru.lab5.Entities.ClientEntity;
-import ru.lab5.Entities.EmployeeEntity;
+import ru.lab5.Entities.Client;
+import ru.lab5.Entities.Employee;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
@@ -47,9 +47,9 @@ public class AuthFilter implements Filter {
         }
 
         HttpSession session = ((HttpServletRequest) request).getSession();
-        ClientEntity user = (ClientEntity) session.getAttribute("PRINCIPAL");
-        EmployeeEntity empl = (EmployeeEntity) session.getAttribute("EMPLOYER");
-        EmployeeEntity admin = (EmployeeEntity) session.getAttribute("ADMIN");
+        Client user = (Client) session.getAttribute("PRINCIPAL");
+        Employee empl = (Employee) session.getAttribute("EMPLOYER");
+        Employee admin = (Employee) session.getAttribute("ADMIN");
 
         if (user != null) {
             logger.trace("user not null" + user.getName());

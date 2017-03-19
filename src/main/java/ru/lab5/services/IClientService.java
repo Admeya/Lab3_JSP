@@ -1,19 +1,20 @@
 package ru.lab5.services;
 
-import ru.lab5.Entities.ClientEntity;
+import ru.lab5.Entities.Client;
+import ru.lab5.POJO.ClientDTO;
 import ru.lab5.exceptions.ClientDAOException;
 
 /**
  * Created by Ирина on 02.03.2017.
  */
 public interface IClientService {
-    ClientEntity isAuthorize(String login, String pass) throws ClientDAOException;
+    // Client authorize(String login, String pass) throws ClientDAOException;
 
-    boolean registration(ClientEntity client);
+    boolean registration(Client client);
 
-    ClientEntity getClientByID(int idJournal);
+    Client getClientByID(int idJournal);
 
-    boolean updateClient(ClientEntity cli);
+    boolean updateClient(ClientDTO cli);
 
-    ClientEntity authorize(String login);
+    Client authorize(String login);
 }

@@ -2,13 +2,13 @@ package ru.lab5.controllers.foremployee;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import ru.lab5.Entities.CountryEntity;
-import ru.lab5.Entities.DestinationEntity;
+import ru.lab5.Entities.Destination;
+import ru.lab5.POJO.DestinationDTO;
 import ru.lab5.exceptions.ExceptionHandling;
-import ru.lab5.services.ICountryService;
 import ru.lab5.services.IDestinationService;
 
 /**
@@ -27,11 +27,12 @@ public class EditDestinationController {
 
     @RequestMapping(value = "/editDest", method = RequestMethod.GET)
     @ExceptionHandler({ExceptionHandling.class})
+    @Secured({"ROLE_USER"})
     public ModelAndView getEditCountryPage(@RequestParam(name = "idDest", required = false) Integer idDest) {
         ModelAndView modelAndView = null;
         if (idDest != null) {
             modelAndView = new ModelAndView("editDestinations");
-            DestinationEntity dest = destinationService.getDestByID(idDest);
+            Destination dest = destinationService.getDestByID(idDest);
             modelAndView.addObject("destinations", dest);
         } else {
             modelAndView = new ModelAndView("error");
@@ -42,7 +43,8 @@ public class EditDestinationController {
 
     @RequestMapping(value = "/editDest", method = RequestMethod.POST)
     @ExceptionHandler({ExceptionHandling.class})
-    public ModelAndView postEditCountryPage(@ModelAttribute("Destination") DestinationEntity dest) {
+    @Secured({"ROLE_USER"})
+    public ModelAndView postEditCountryPage(@ModelAttribute("Destination") DestinationDTO dest) {
         ModelAndView modelAndView = null;
         if (destinationService.updateDestination(dest)) {
             modelAndView = new ModelAndView("redirect:/viewDest");

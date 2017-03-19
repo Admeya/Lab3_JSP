@@ -24,7 +24,7 @@
             </tr>
             <tr>
                 <td>Password:</td>
-                <td>${Client.pass}</td>
+                <td>${Client.password}</td>
             </tr>
             <tr>
                 <td>Фамилия:</td>

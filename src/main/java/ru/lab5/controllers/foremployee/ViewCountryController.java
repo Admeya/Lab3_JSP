@@ -2,13 +2,14 @@ package ru.lab5.controllers.foremployee;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import ru.lab5.Entities.CountryEntity;
+import ru.lab5.Entities.Country;
 import ru.lab5.exceptions.ExceptionHandling;
 import ru.lab5.services.ICountryService;
 
@@ -30,6 +31,7 @@ public class ViewCountryController {
 
     @RequestMapping(value = "/viewCountry", method = RequestMethod.GET)
     @ExceptionHandler({ExceptionHandling.class})
+    @Secured({"ROLE_USER"})
     public ModelAndView getEditLKCLientPage(@RequestParam(name = "idCountry", required = false) Integer idCountry) {
         ModelAndView modelAndView = new ModelAndView("viewCountries");
         if (idCountry != null) {
@@ -40,7 +42,7 @@ public class ViewCountryController {
                 throw new ExceptionHandling("I can't delete Country");
             }
         } else {
-            List<CountryEntity> countries = countryService.getAllCountries();
+            List<Country> countries = countryService.getAllCountries();
             modelAndView.addObject("countries", countries);
         }
         return modelAndView;

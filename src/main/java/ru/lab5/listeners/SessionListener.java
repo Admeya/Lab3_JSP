@@ -1,6 +1,6 @@
 package ru.lab5.listeners;
 
-import ru.lab5.Entities.EmployeeEntity;
+import ru.lab5.Entities.Employee;
 import ru.lab5.common.Mailer;
 import org.apache.log4j.Logger;
 
@@ -15,7 +15,7 @@ public class SessionListener implements HttpSessionAttributeListener {
 
     @Override
     public void attributeAdded(HttpSessionBindingEvent event) {
-        EmployeeEntity empl = (EmployeeEntity) event.getSession().getAttribute("ADMIN");
+        Employee empl = (Employee) event.getSession().getAttribute("ADMIN");
         logger.trace("Session created " + empl);
         String email = empl.getEmail();
         Mailer.sendMail(email, "admin logined", "wow!!!");

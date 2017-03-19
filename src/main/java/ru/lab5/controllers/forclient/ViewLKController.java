@@ -2,13 +2,14 @@ package ru.lab5.controllers.forclient;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import ru.lab5.Entities.ClientEntity;
+import ru.lab5.Entities.Client;
 import ru.lab5.exceptions.ExceptionHandling;
 import ru.lab5.services.IClientService;
 
@@ -28,11 +29,12 @@ public class ViewLKController {
 
     @RequestMapping(value = "/viewLKClient", method = RequestMethod.GET)
     @ExceptionHandler({ExceptionHandling.class})
+    @Secured({"ROLE_CLIENT"})
     public ModelAndView getRequestPage(@RequestParam(name = "idClient", required = false) Integer idClient) {
         ModelAndView modelAndView = null;
         if (idClient != null) {
             modelAndView = new ModelAndView("viewLK");
-            ClientEntity client = clientService.getClientByID(idClient);
+            Client client = clientService.getClientByID(idClient);
             modelAndView.addObject("Client", client);
         } else {
             modelAndView = new ModelAndView("error");
@@ -42,6 +44,7 @@ public class ViewLKController {
     }
 
     @RequestMapping(value = "/viewLKClient", method = RequestMethod.POST)
+    @Secured({"ROLE_CLIENT"})
     public ModelAndView postRequestPage(@RequestParam(name = "clientId") Integer clientId) {
         ModelAndView modelAndView = new ModelAndView("redirect:/editClient?idClient=" + clientId);
         return modelAndView;

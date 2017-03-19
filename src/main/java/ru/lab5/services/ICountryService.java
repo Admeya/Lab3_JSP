@@ -1,7 +1,7 @@
 package ru.lab5.services;
 
-import ru.lab5.Entities.CountryEntity;
-import ru.lab5.Entities.TourEntity;
+import ru.lab5.Entities.Country;
+import ru.lab5.POJO.CountryDTO;
 
 import java.util.List;
 
@@ -10,13 +10,13 @@ import java.util.List;
  */
 public interface ICountryService {
 
-    List<CountryEntity> getAllCountries();
+    List<Country> getAllCountries();
 
-    boolean updateCountry(CountryEntity tour);
+    boolean updateCountry(CountryDTO country);
 
     boolean deleteCountry(int countryId);
 
-    CountryEntity getCountryByID(int idCountry);
+    Country getCountryByID(int idCountry);
 
-    boolean addCountry(CountryEntity country);
+    boolean addCountry(CountryDTO country);
 }

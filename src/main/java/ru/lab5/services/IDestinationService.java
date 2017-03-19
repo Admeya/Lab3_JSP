@@ -1,7 +1,7 @@
 package ru.lab5.services;
 
-import ru.lab5.Entities.CountryEntity;
-import ru.lab5.Entities.DestinationEntity;
+import ru.lab5.Entities.Destination;
+import ru.lab5.POJO.DestinationDTO;
 
 import java.util.List;
 
@@ -10,13 +10,13 @@ import java.util.List;
  */
 public interface IDestinationService {
 
-    List<DestinationEntity> getAllDests();
+    List<Destination> getAllDests();
 
-    boolean updateDestination(DestinationEntity dest);
+    boolean updateDestination(DestinationDTO dest);
 
     boolean deleteDestination(int destId);
 
-    DestinationEntity getDestByID(int destId);
+    Destination getDestByID(int destId);
 
-    boolean addDestination(DestinationEntity dest);
+    boolean addDestination(DestinationDTO dest);
 }

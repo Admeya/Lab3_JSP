@@ -1,6 +1,7 @@
 package ru.lab5.services;
 
-import ru.lab5.Entities.TourEntity;
+import ru.lab5.Entities.Tour;
+import ru.lab5.POJO.TourDTO;
 
 import java.util.List;
 
@@ -9,13 +10,13 @@ import java.util.List;
  */
 public interface ITourService {
 
-    List<TourEntity> getAllTours();
+    List<Tour> getAllTours();
 
-    boolean updateTour(TourEntity tour);
+    boolean updateTour(TourDTO tour);
 
-    boolean addTour(TourEntity tour);
+    boolean addTour(TourDTO tour);
 
     boolean deleteTour(int tourId);
 
-    TourEntity getTourById(int idDest);
+    Tour getTourById(int idDest);
 }

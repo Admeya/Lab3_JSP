@@ -21,8 +21,8 @@
                 <td><input type="text" name="login" id="login" value=""></td>
             </tr>
             <tr>
-                <td><label for="pass">Password:</label></td>
-                <td><input type="text" name="pass" id="pass" value=""></td>
+                <td><label for="password">Password:</label></td>
+                <td><input type="text" name="password" id="password" value=""></td>
             </tr>
             <tr>
                 <td><label for="surname">Фамилия:</label></td>

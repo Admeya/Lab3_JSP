@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import ru.lab5.Entities.ClientEntity;
+import ru.lab5.Entities.Client;
 import ru.lab5.services.IClientService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,8 +32,8 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         System.out.println("Login is " + s);
 
-        ClientEntity newUser = clientService.authorize(s);
-        System.out.println(newUser.getLogin() + " " + newUser.getPass());
+        Client newUser = clientService.authorize(s);
+        System.out.println(newUser.getLogin() + " " + newUser.getPassword());
         if (newUser == null) {
             throw new UsernameNotFoundException("User details not found with this username: " + s);
         }
@@ -41,9 +41,9 @@ public class CustomUserDetailsService implements UserDetailsService {
         authList.add(new SimpleGrantedAuthority("ROLE_CLIENT"));
 
         request.getSession().setAttribute("PRINCIPAL", newUser);
-        System.out.println(newUser.getPass().trim() + " non encrypted password");
+        System.out.println(newUser.getPassword().trim() + " non encrypted password");
 
-        User user = new User(newUser.getLogin().trim(), newUser.getPass(), authList);
+        User user = new User(newUser.getLogin().trim(), newUser.getPassword().trim(), authList);
 
         return user;
     }

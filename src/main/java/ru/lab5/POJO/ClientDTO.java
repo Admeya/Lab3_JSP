@@ -1,23 +1,16 @@
-package ru.lab5.Entities;
+package ru.lab5.POJO;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.sql.Date;
-import java.util.Collection;
 
 /**
  * Created by Ирина on 17.02.2017.
  */
-public class ClientEntity implements Serializable {
-    public static String tableName = "client";
-    public static String columnIdClient = "id_client";
-    public static String columnName = "name";
-    public static String columnSurname = "surname";
-    public static String columnMiddlename = "middlename";
-    public static String columnBirthdate = "birthdate";
-    public static String columnPasport = "passport_ser_num";
-    public static String columnPhone = "phone";
-    public static String columnLogin = "login";
-    public static String columnPass = "password";
+public class ClientDTO {
     private Integer idClient;
     private String name;
     private String surname;
@@ -26,13 +19,13 @@ public class ClientEntity implements Serializable {
     private String passportSerNum;
     private String phone;
     private String login;
-    private String pass;
+    private String password;
 
-    public ClientEntity() {
+    public ClientDTO() {
     }
 
-    public ClientEntity(String name, String surname, String middlename, Date birthdate, String passportSerNum,
-                        String phone, String login, String pass) {
+    public ClientDTO(String name, String surname, String middlename, Date birthdate, String passportSerNum,
+                     String phone, String login, String password) {
         this.name = name;
         this.surname = surname;
         this.middlename = middlename;
@@ -40,11 +33,11 @@ public class ClientEntity implements Serializable {
         this.passportSerNum = passportSerNum;
         this.phone = phone;
         this.login = login;
-        this.pass = pass;
+        this.password = password;
     }
 
-    public ClientEntity(int id, String name, String surname, String middlename, Date birthdate, String passportSerNum,
-                        String phone, String login, String pass) {
+    public ClientDTO(int id, String name, String surname, String middlename, Date birthdate, String passportSerNum,
+                     String phone, String login, String password) {
         this.idClient = id;
         this.name = name;
         this.surname = surname;
@@ -53,7 +46,7 @@ public class ClientEntity implements Serializable {
         this.passportSerNum = passportSerNum;
         this.phone = phone;
         this.login = login;
-        this.pass = pass;
+        this.password = password;
     }
 
     public Integer getIdClient() {
@@ -120,12 +113,12 @@ public class ClientEntity implements Serializable {
         this.login = login;
     }
 
-    public String getPass() {
-        return pass;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPass(String pass) {
-        this.pass = pass;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override
@@ -133,7 +126,7 @@ public class ClientEntity implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ClientEntity that = (ClientEntity) o;
+        ClientDTO that = (ClientDTO) o;
 
         if (!idClient.equals(that.idClient)) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
@@ -161,7 +154,7 @@ public class ClientEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "ClientEntity{" +
+        return "Client{" +
                 "idClient=" + idClient +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +

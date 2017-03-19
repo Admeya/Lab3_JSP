@@ -1,11 +1,19 @@
 package ru.lab5.DAO;
 
-import org.springframework.stereotype.Component;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
-import ru.lab5.Entities.ClientEntity;
-import ru.lab5.Entities.EmployeeEntity;
+import ru.lab5.Entities.Client;
+import ru.lab5.Entities.Employee;
+import ru.lab5.POJO.ClientDTO;
+import ru.lab5.POJO.EmployeeDTO;
 import ru.lab5.common.SaltPassword;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,98 +21,96 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Repository
-public class EmployeeDao extends AbstractDao<EmployeeEntity> {
-    public static final String GET_ID_BY_STRING_PARAM = "SELECT * FROM " + EmployeeEntity.tableName + " WHERE %s = ?";
+public class EmployeeDao implements IEmployeeDao {
+    private static final EntityManagerFactory FACTORY = Persistence.createEntityManagerFactory("TOUR");
+    Logger logger = Logger.getLogger(ClientDao.class);
 
-    @Override
-    public String getTableName() {
-        return EmployeeEntity.tableName;
+    public List<Employee> selectByLogin(String login) {
+        EntityManager em = FACTORY.createEntityManager();
+        CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+        CriteriaQuery<Employee> criteriaQuery = criteriaBuilder.createQuery(Employee.class);
+        Root<Employee> root = criteriaQuery.from(Employee.class);
+        criteriaQuery.select(root);
+        criteriaQuery.where(
+                criteriaBuilder.and(
+                        criteriaBuilder.equal(root.get("login"), login)
+                )
+        );
+        List<Employee> users = em.createQuery(criteriaQuery).getResultList();
+        logger.trace("I find client! " + users.get(0));
+        return users;
+    }
+
+    public Employee selectByPK(int idEmployee) {
+        EntityManager em = FACTORY.createEntityManager();
+        CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+        CriteriaQuery<Employee> criteriaQuery = criteriaBuilder.createQuery(Employee.class);
+        Root<Employee> root = criteriaQuery.from(Employee.class);
+        criteriaQuery.select(root);
+        criteriaQuery.where(
+                criteriaBuilder.and(
+                        criteriaBuilder.equal(root.get("idEmployee"), idEmployee)
+                )
+        );
+        List<Employee> users = em.createQuery(criteriaQuery).getResultList();
+        logger.trace("I find client! " + users.get(0));
+        return users.get(0);
+    }
+
+    public boolean update(EmployeeDTO employee) {
+        EntityManager em = FACTORY.createEntityManager();
+        em.getTransaction().begin();
+
+        Employee employeeEntity = selectByPK(employee.getIdEmployee());
+
+        employeeEntity.setName(employee.getName().trim());
+        employeeEntity.setSurname(employee.getSurname().trim());
+        employeeEntity.setPhone(employee.getPhone().trim());
+        employeeEntity.setEmail(employee.getEmail());
+        employeeEntity.setLogin(employee.getLogin().trim());
+        employeeEntity.setRole(employee.getRole().trim());
+
+        em.merge(employeeEntity);
+        em.getTransaction().commit();
+        em.close();
+        return true;
+    }
+
+    public List<Employee> selectAll() {
+        EntityManager em = FACTORY.createEntityManager();
+        CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+        CriteriaQuery<Employee> criteriaQuery = criteriaBuilder.createQuery(Employee.class);
+        Root<Employee> root = criteriaQuery.from(Employee.class);
+        criteriaQuery.select(root);
+        List<Employee> users = em.createQuery(criteriaQuery).getResultList();
+        return users;
+    }
+
+    public boolean deleteById(int idEmployee) {
+        return true;
     }
 
     @Override
-    public String getInsertQuery() {
-        return "INSERT INTO " + EmployeeEntity.tableName + " (" + EmployeeEntity.columnName + "," + EmployeeEntity.columnSurname + "," +
-                EmployeeEntity.columnPhone + ", " + EmployeeEntity.columnLogin + ", " + EmployeeEntity.columnPass +
-                ", " + EmployeeEntity.columnMail + ", " + EmployeeEntity.columnRole + ") " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?);";
+    public boolean insert(EmployeeDTO employee) {
+        return false;
     }
 
     @Override
-    public String getUpdateQuery() {
-        return "UPDATE " + EmployeeEntity.tableName + " SET " + EmployeeEntity.columnName + " = ? ," + EmployeeEntity.columnSurname + " = ?," +
-                EmployeeEntity.columnPhone + " = ?," + EmployeeEntity.columnLogin + " = ?," +
-                EmployeeEntity.columnMail + " = ?, " + EmployeeEntity.columnRole + " = ? WHERE " +
-                EmployeeEntity.columnId + " = ?";
+    public int getIdByName(String name) {
+        EntityManager em = FACTORY.createEntityManager();
+        CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+        CriteriaQuery<Employee> criteriaQuery = criteriaBuilder.createQuery(Employee.class);
+        Root<Employee> root = criteriaQuery.from(Employee.class);
+        criteriaQuery.select(root);
+        criteriaQuery.where(
+                criteriaBuilder.and(
+                        criteriaBuilder.equal(root.get("name"), name)
+                )
+        );
+        List<Employee> users = em.createQuery(criteriaQuery).getResultList();
+        logger.trace("I find client! " + users.get(0));
+        return users.get(0).getIdEmployee();
     }
 
-
-    @Override
-    protected void prepareStatementForInsert(PreparedStatement statement, EmployeeEntity object) {
-        try {
-            statement.setString(1, object.getName());
-            statement.setString(2, object.getSurname());
-            statement.setString(3, object.getPhone());
-            statement.setString(4, object.getLogin());
-            statement.setString(5, SaltPassword.encryptPass(object.getPassword()));
-            statement.setString(6, object.getEmail());
-            statement.setString(7, object.getRole());
-            logger.trace(statement);
-        } catch (Exception e) {
-            logger.error("Возникла ошибка при подготовке данных для вставки в таблицу " + EmployeeEntity.tableName, e);
-        }
-    }
-
-    @Override
-    public List<EmployeeEntity> parseResultSet(ResultSet rs) {
-        LinkedList<EmployeeEntity> result = new LinkedList<EmployeeEntity>();
-        try {
-            if (!rs.next()) {
-                return null;
-            } else {
-                rs.beforeFirst();
-                while (rs.next()) {
-                    EmployeeEntity employee = new EmployeeEntity(rs.getInt(EmployeeEntity.columnId), rs.getString(EmployeeEntity.columnName).trim(),
-                            rs.getString(EmployeeEntity.columnSurname).trim(), rs.getString(EmployeeEntity.columnPhone).trim(),
-                            rs.getString(EmployeeEntity.columnLogin).trim(), rs.getString(EmployeeEntity.columnPass).trim(),
-                            rs.getString(EmployeeEntity.columnMail).trim(), rs.getString(EmployeeEntity.columnRole).trim());
-                    result.add(employee);
-                }
-            }
-        } catch (SQLException e) {
-            logger.error("SQL Exception при парсинге записей из таблицы " + EmployeeEntity.tableName + " в объект ClientDAO:", e);
-        }
-        return result;
-    }
-
-    @Override
-    protected void prepareStatementForUpdate(PreparedStatement statement, EmployeeEntity object) {
-        try {
-            statement.setString(1, object.getName());
-            statement.setString(2, object.getSurname());
-            statement.setString(3, object.getPhone());
-            statement.setString(4, object.getLogin());
-            statement.setString(5, object.getEmail());
-            statement.setString(6, object.getRole());
-            statement.setInt(7, object.getIdEmployee());
-            logger.trace(statement);
-        } catch (Exception e) {
-            logger.error("Возникла ошибка при подготовке данных для вставки в таблицу " + ClientEntity.tableName, e);
-        }
-    }
-
-    public int selectIdByParam(String columnName, String value) {
-        String sql = String.format(GET_ID_BY_STRING_PARAM, columnName);
-        EmployeeEntity empl = null;
-        try (PreparedStatement ps = getConnection().prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
-            ps.setString(1, value);
-            sql = ps.toString();
-            ResultSet rs = ps.executeQuery();
-            List<EmployeeEntity> list = parseResultSet(rs);
-            empl = list.iterator().next();
-        } catch (Exception e) {
-            logger.error("Возникла ошибка при извлечении данных по первичному ключу из БД: " + sql, e);
-        }
-        return empl.getIdEmployee();
-    }
 
 }

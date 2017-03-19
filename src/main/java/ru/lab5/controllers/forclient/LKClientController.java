@@ -1,11 +1,12 @@
 package ru.lab5.controllers.forclient;
 
 import org.apache.log4j.Logger;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import ru.lab5.Entities.ClientEntity;
+import ru.lab5.Entities.Client;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +22,7 @@ public class LKClientController extends HttpServlet {
 
     void catchUser(HttpServletRequest req) {
         HttpSession session = ((HttpServletRequest) req).getSession();
-        ClientEntity user = (ClientEntity) session.getAttribute("PRINCIPAL");
+        Client user = (Client) session.getAttribute("PRINCIPAL");
         logger.trace("Hello from LKCLientServlet " + user);
         req.setAttribute("Client", user);
     }

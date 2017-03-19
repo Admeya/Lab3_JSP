@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import ru.lab5.Entities.ClientEntity;
+import ru.lab5.Entities.Client;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.lab5.exceptions.ExceptionHandling;
@@ -36,7 +36,7 @@ public class RegistrationController extends HttpServlet {
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     @ExceptionHandler({ExceptionHandling.class})
-    public ModelAndView showRegistrationPage(@ModelAttribute("client") ClientEntity client) {
+    public ModelAndView showRegistrationPage(@ModelAttribute("client") Client client) {
         ModelAndView modelAndView = null;
         if (clientService.registration(client)) {
             modelAndView = new ModelAndView("redirect:/login");

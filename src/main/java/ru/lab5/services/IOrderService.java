@@ -1,6 +1,7 @@
 package ru.lab5.services;
 
-import ru.lab5.Entities.OrderEntity;
+import ru.lab5.Entities.Order;
+import ru.lab5.POJO.OrderDTO;
 
 import java.util.List;
 
@@ -8,7 +9,7 @@ import java.util.List;
  * Created by Ирина on 02.03.2017.
  */
 public interface IOrderService {
-    boolean isInsert(OrderEntity order);
+    boolean isInsert(OrderDTO order);
 
-    List<OrderEntity> getOrdersByEmployee(int idEmployee);
+    List<Order> getOrdersByEmployee(int idEmployee);
 }

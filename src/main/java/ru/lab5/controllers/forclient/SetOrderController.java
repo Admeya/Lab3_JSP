@@ -2,14 +2,15 @@ package ru.lab5.controllers.forclient;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import ru.lab5.Entities.EmployeeEntity;
-import ru.lab5.Entities.OrderEntity;
+import ru.lab5.Entities.Employee;
+import ru.lab5.Entities.Order;
 import ru.lab5.exceptions.ExceptionHandling;
 import ru.lab5.services.IEmployeeService;
 import ru.lab5.services.IOrderService;
@@ -40,18 +41,18 @@ public class SetOrderController {
     @ExceptionHandler({ExceptionHandling.class})
     public ModelAndView getEditLKCLientPage(@RequestParam(name = "idClient", required = false) Integer idClient, @RequestParam(name = "idTour", required = false) Integer idTour) {
         ModelAndView modelAndView = null;
-        if (idClient != null) {
-            int idDefaultEmployee = employeeService.getIdByParam(EmployeeEntity.columnName, "Default");
-            LocalDate localDate = LocalDate.now();
-            OrderEntity order = new OrderEntity(idDefaultEmployee, idClient, idTour, localDate);
-            if (orderService.isInsert(order)) {
-                modelAndView = new ModelAndView("setOrder");
-            } else {
-                modelAndView = new ModelAndView("error");
-                throw new ExceptionHandling("I can't add new Order");
-            }
-        } else
-            modelAndView = new ModelAndView("login");
+//        if (idClient != null) {
+//            int idDefaultEmployee = employeeService.getIdByParam(Employee.columnName, "Default");
+//            LocalDate localDate = LocalDate.now();
+//            Order order = new Order(idDefaultEmployee, idClient, idTour, localDate);
+//            if (orderService.isInsert(order)) {
+//                modelAndView = new ModelAndView("setOrder");
+//            } else {
+//                modelAndView = new ModelAndView("error");
+//                throw new ExceptionHandling("I can't add new Order");
+//            }
+//        } else
+//            modelAndView = new ModelAndView("login");
         return modelAndView;
     }
 }

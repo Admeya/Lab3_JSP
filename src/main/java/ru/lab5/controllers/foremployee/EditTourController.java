@@ -2,10 +2,12 @@ package ru.lab5.controllers.foremployee;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import ru.lab5.Entities.TourEntity;
+import ru.lab5.Entities.Tour;
+import ru.lab5.POJO.TourDTO;
 import ru.lab5.exceptions.ExceptionHandling;
 import ru.lab5.services.ITourService;
 
@@ -25,11 +27,12 @@ public class EditTourController {
 
     @RequestMapping(value = "/editTour", method = RequestMethod.GET)
     @ExceptionHandler({ExceptionHandling.class})
+    @Secured({"ROLE_USER"})
     public ModelAndView getEditCountryPage(@RequestParam(name = "idTour", required = false) Integer idTour) {
         ModelAndView modelAndView = null;
         if (idTour != null) {
             modelAndView = new ModelAndView("editTours");
-            TourEntity tour = tourService.getTourById(idTour);
+            Tour tour = tourService.getTourById(idTour);
             modelAndView.addObject("tours", tour);
         } else {
             modelAndView = new ModelAndView("error");
@@ -40,7 +43,8 @@ public class EditTourController {
 
     @RequestMapping(value = "/editTour", method = RequestMethod.POST)
     @ExceptionHandler({ExceptionHandling.class})
-    public ModelAndView postEditCountryPage(@ModelAttribute("Tour") TourEntity tour) {
+    @Secured({"ROLE_USER"})
+    public ModelAndView postEditCountryPage(@ModelAttribute("Tour") TourDTO tour) {
         ModelAndView modelAndView = null;
         if (tourService.updateTour(tour)) {
             modelAndView = new ModelAndView("redirect:/viewTour");

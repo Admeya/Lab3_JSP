@@ -2,14 +2,15 @@ package ru.lab5.controllers.foremployee;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import ru.lab5.Entities.EmployeeEntity;
-import ru.lab5.Entities.OrderEntity;
+import ru.lab5.Entities.Employee;
+import ru.lab5.Entities.Order;
 import ru.lab5.exceptions.ExceptionHandling;
 import ru.lab5.services.IEmployeeService;
 import ru.lab5.services.IOrderService;
@@ -39,18 +40,19 @@ public class EditOrderController extends HttpServlet {
 
     @RequestMapping(value = "/editOrder", method = RequestMethod.GET)
     @ExceptionHandler({ExceptionHandling.class})
+    @Secured({"ROLE_USER"})
     public ModelAndView getEditLKCLientPage(@RequestParam(name = "idEmpl", required = false) Integer idEmpl) {
         ModelAndView modelAndView = null;
         if (idEmpl != null) {
             modelAndView = new ModelAndView("viewOrders");
 
             //Заказы в работе
-            List<OrderEntity> ordersThisEmployee = orderService.getOrdersByEmployee(idEmpl);
+            List<Order> ordersThisEmployee = orderService.getOrdersByEmployee(idEmpl);
             modelAndView.addObject("myOrders", ordersThisEmployee);
 
             //Новые заказы
-            int idDefaultEmployee = employeeService.getIdByParam(EmployeeEntity.columnName, "Default");
-            List<OrderEntity> newOrders = orderService.getOrdersByEmployee(idDefaultEmployee);
+            int idDefaultEmployee = employeeService.getIdByName("Default");
+            List<Order> newOrders = orderService.getOrdersByEmployee(idDefaultEmployee);
             modelAndView.addObject("newOrders", newOrders);
         } else {
             modelAndView = new ModelAndView("error");
